@@ -11,10 +11,6 @@ object Application extends Controller {
     Ok(views.html.index())
   }
 
-  def about = Action {
-    Ok(views.html.about())
-  }
-
   def ithappens = Action {
     val document = new ContentExtractor("http://ithappens.ru")
     val str = document.html.select("p[id]")

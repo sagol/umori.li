@@ -4,7 +4,6 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /about.html                 controllers.Application.about
 GET     /bash.html                  controllers.Application.bash
 GET     /ithappens.html             controllers.Application.ithappens
 GET     /zadolbali.html             controllers.Application.zadolbali
