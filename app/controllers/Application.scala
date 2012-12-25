@@ -4,11 +4,16 @@ import play.api._
 import play.api.mvc._
 import java.io.File
 import scala.io.Source
+import org.jsoup.Jsoup
 
 object Application extends Controller {
 
   def index = Action {
     Ok(views.html.index())
+  }
+
+  def agree = Action {
+    Ok(views.html.agree("Пользовательское соглашение"))
   }
 
   def ithappens = Action {

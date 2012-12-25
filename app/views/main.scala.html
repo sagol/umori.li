@@ -4,7 +4,7 @@
 
 <html>
     <head>
-        <title>Funr</title>
+        <title>Fanar.im</title>
 
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.css")">
@@ -18,7 +18,7 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="@routes.Application.index()">Funr</a>
+                    <a class="brand" href="@routes.Application.index()">Fanar.im</a>
                         <ul class="nav">
                             <li class="@("active".when(nav == "bash.im"))">
                                 <a href="@routes.Application.bash()">bash.im</a>
@@ -44,7 +44,7 @@
                 <h3>@title</h3>
             </div>
         </header>
-
+        <br/>
         <div class="container">
 
             <div class="content">
@@ -56,12 +56,21 @@
                 </div>
                 
             </div>
-
-            <footer>
-
-            </footer>
-
         </div>
-        
+        <footer class="footer">
+            <div class="container">
+                <p>Использование сайта подразумевает согласие с <a href="@routes.Application.agree()">пользовательским соглашением. 18+ </p>
+                <ul class="footer-links">
+                    <li><a href="http://bash.im">Bash.im</a></li>
+                    <li class="muted">·</li>
+                    <li><a href="https://ithappens.ru">IT happens</a></li>
+                    <li class="muted">·</li>
+                    <li><a href="https://zadolba.li">Zadolba.li</a></li>
+                    <li class="muted">·</li>
+                    <li><a href="https://anekdoti.ru">anekdoti.ru</a></li>
+                </ul>
+            </div>
+        </footer>
+
     </body>
 </html>
