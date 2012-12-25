@@ -1,0 +1,63 @@
+@(title: Html, nav: String = "")(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Funr</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="@routes.Application.index()"><b>Funr</b></a>
+                    <ul class="nav">
+                        <li class="@("active".when(nav == "bash"))">
+                            <a href="@routes.Application.bash()">bash.im</a>
+                        </li>
+                        <li class="@("active".when(nav == "ithappens.ru"))">
+                            <a href="@routes.Application.ithappens()">ithappens.ru</a>
+                        </li>
+                        <li class="@("active".when(nav == "zadolba.li"))">
+                            <a href="@routes.Application.zadolbali()">zadolba.li</a>
+                        </li>
+                        <li class="@("active".when(nav == "shortiki,com"))">
+                            <a href="@routes.Application.shortiki()">shortiki.com</a>
+                        </li>
+                        <li class="@("active".when(nav == "about"))">
+                            <a href="@routes.Application.about()">about</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div class="content">
+                
+                <div class="page-header">
+                    <h1>@title</h1>
+                </div>
+
+                <div class="row">
+                    <div class="span14">
+                        @content
+                    </div>
+                </div>
+                
+            </div>
+
+            <footer>
+
+            </footer>
+
+        </div>
+        
+    </body>
+</html>
