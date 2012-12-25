@@ -37,6 +37,12 @@ object Application extends Controller {
     Ok(views.html.bash("shortiki.com", document.Format(str, 0).toString))
   }
 
+  def anekdot = Action {
+    val document = new ContentExtractor("http://www.anekdot.ru/last/j.html")
+    val str = document.html.getElementsByClass("text")
+    Ok(views.html.bash("anekdot.ru", document.Format(str, 0).toString))
+  }
+
 }
 
 
