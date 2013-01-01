@@ -33,7 +33,7 @@ object SourceInstances {
 
   private def update (force: Boolean = false): Map[SourceInstance, Boolean] = {
     var map:Map[SourceInstance, Boolean] = Map()
-    if (force || (System.currentTimeMillis() - lastUpdateTime > 1000)) {
+    if (force || (System.currentTimeMillis() - lastUpdateTime > 60000)) {
       for (i <- this.instances) map += (i -> i.update())
       this.random = getRandomMix()
       this.lastUpdateTime = System.currentTimeMillis()
@@ -72,7 +72,7 @@ object SourceInstances {
     for (i <- s) {
       elems.add(instances(i._1).instance(i._2).getContent().get(i._3))
     }
-    s.toString() + elems.toString
+    elems.toString
   }
 
 }

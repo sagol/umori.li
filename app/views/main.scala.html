@@ -26,8 +26,12 @@
                     <a class="brand" href="@routes.Application.index()">Umori.li</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="@("active".when(nav == "bash.im"))">
-                                <a href="@routes.Application.bash()">bash.im</a>
+                            <li class="dropdown @("active".when(nav == "bash.im"))">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">bash.im <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@routes.Application.bash(Option("bash"))">Новые</a></li>
+                                    <li><a href="@routes.Application.bash(Option("abyss"))">Бездна</a></li>
+                                </ul>
                             </li>
                             <li class="@("active".when(nav == "ithappens.ru"))">
                                 <a href="@routes.Application.ithappens()">ithappens.ru</a>
@@ -38,8 +42,14 @@
                             <li class="@("active".when(nav == "shortiki.com"))">
                                 <a href="@routes.Application.shortiki()">shortiki.com</a>
                             </li>
-                            <li class="@("active".when(nav == "anekdot.ru"))">
-                                <a href="@routes.Application.anekdot()">anekdot.ru</a>
+                            <li class="dropdown @("active".when(nav == "anekdot.ru"))">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">anekdot.ru <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@routes.Application.anekdot(Option("new anekdot"))">Анекдоты</a></li>
+                                    <li><a href="@routes.Application.anekdot(Option("new story"))">Истории</a></li>
+                                    <li><a href="@routes.Application.anekdot(Option("new aforizm"))">Афоризмы</a></li>
+                                    <li><a href="@routes.Application.anekdot(Option("new stihi"))">Стихи</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -82,25 +92,25 @@
         </footer>
 
         <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-        <script src="javascripts/jquery.js"></script>
-        <script src="javascripts/bootstrap-transition.js"></script>
-        <script src="javascripts/bootstrap-alert.js"></script>
-        <script src="javascripts/bootstrap-modal.js"></script>
-        <script src="javascripts/bootstrap-dropdown.js"></script>
-        <script src="javascripts/bootstrap-scrollspy.js"></script>
-        <script src="javascripts/bootstrap-tab.js"></script>
-        <script src="javascripts/bootstrap-tooltip.js"></script>
-        <script src="javascripts/bootstrap-popover.js"></script>
-        <script src="javascripts/bootstrap-button.js"></script>
-        <script src="javascripts/bootstrap-collapse.js"></script>
-        <script src="javascripts/bootstrap-carousel.js"></script>
-        <script src="javascripts/bootstrap-typeahead.js"></script>
-        <script src="javascripts/bootstrap-affix.js"></script>
+        <script src="@routes.Assets.at("javascripts/jquery.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-transition.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-alert.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-modal.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-dropdown.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-scrollspy.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-tab.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-tooltip.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-popover.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-button.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-collapse.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-carousel.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-typeahead.js")"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-affix.js")"></script>
 
-        <script src="javascripts/holder/holder.js"></script>
-        <script src="javascripts/google-code-prettify/prettify.js"></script>
+        <script src="@routes.Assets.at("javascripts/holder/holder.js")"></script>
+        <script src="@routes.Assets.at("javascripts/google-code-prettify/prettify.js")"></script>
 
-        <script src="javascripts/application.js"></script>
+        <script src="@routes.Assets.at("javascripts/application.js")"></script>
 
     </body>
 </html>

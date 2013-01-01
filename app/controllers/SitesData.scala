@@ -22,6 +22,9 @@ object SitesData {
     { "site": "shortiki.com", "name" : "shortiki", "url": "http://shortiki.com", "parsel": ".shortik" }
   ]"""
   val anekdot = """[
-    { "site": "anekdot.ru", "name" : "anekdot", "url": "http://www.anekdot.ru/last/j.html", "parsel": ".text" }
+    { "site": "anekdot.ru", "name" : "new anekdot", "url": "http://www.anekdot.ru/last/j.html", "parsel": ".text" },
+    { "site": "anekdot.ru", "name" : "new story", "url": "http://www.anekdot.ru/last/o.html", "parsel": ".text" },
+    { "site": "anekdot.ru", "name" : "new aforizm", "url": "http://www.anekdot.ru/last/a.html", "parsel": ".text" },
+    { "site": "anekdot.ru", "name" : "new stihi", "url": "http://www.anekdot.ru/last/c.html", "parsel": ".text" }
   ]"""
 }

@@ -23,9 +23,9 @@ object Application extends Controller {
     Ok(views.html.bash("ithappens.ru", SourceInstances.instance_ithappens.getContentAsStringBySite("ithappens.ru")))
   }
 
-  def bash = Action {
+  def bash(name: Option[String])= Action {
     SourceInstances.updateAll()
-    Ok(views.html.bash("bash.im", SourceInstances.instance_bash.getContentAsStringBySite("bash.im")))
+    Ok(views.html.bash("bash.im", SourceInstances.instance_bash.getContentAsStringByName(name.getOrElse("bash"))))
   }
 
   def zadolbali = Action {
@@ -38,9 +38,9 @@ object Application extends Controller {
     Ok(views.html.bash("shortiki.com", SourceInstances.instance_shortiki.getContentAsStringBySite("shortiki.com")))
   }
 
-  def anekdot = Action {
+  def anekdot(name: Option[String]) = Action {
     SourceInstances.updateAll()
-    Ok(views.html.bash("anekdot.ru", SourceInstances.instance_anekdot.getContentAsStringBySite("anekdot.ru")))
+    Ok(views.html.bash("anekdot.ru", SourceInstances.instance_anekdot.getContentAsStringByName(name.getOrElse("new anekdot"))))
   }
 
 }
