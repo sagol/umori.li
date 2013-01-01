@@ -4,7 +4,7 @@
 
 <html>
     <head>
-        <title>Fanar.im</title>
+        <title>Umori.li</title>
 
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.css")">
@@ -18,7 +18,13 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="@routes.Application.index()">Fanar.im</a>
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="brand" href="@routes.Application.index()">Umori.li</a>
+                    <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="@("active".when(nav == "bash.im"))">
                                 <a href="@routes.Application.bash()">bash.im</a>
@@ -36,6 +42,7 @@
                                 <a href="@routes.Application.anekdot()">anekdot.ru</a>
                             </li>
                         </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,5 +80,27 @@
                 </ul>
             </div>
         </footer>
+
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        <script src="javascripts/jquery.js"></script>
+        <script src="javascripts/bootstrap-transition.js"></script>
+        <script src="javascripts/bootstrap-alert.js"></script>
+        <script src="javascripts/bootstrap-modal.js"></script>
+        <script src="javascripts/bootstrap-dropdown.js"></script>
+        <script src="javascripts/bootstrap-scrollspy.js"></script>
+        <script src="javascripts/bootstrap-tab.js"></script>
+        <script src="javascripts/bootstrap-tooltip.js"></script>
+        <script src="javascripts/bootstrap-popover.js"></script>
+        <script src="javascripts/bootstrap-button.js"></script>
+        <script src="javascripts/bootstrap-collapse.js"></script>
+        <script src="javascripts/bootstrap-carousel.js"></script>
+        <script src="javascripts/bootstrap-typeahead.js"></script>
+        <script src="javascripts/bootstrap-affix.js"></script>
+
+        <script src="javascripts/holder/holder.js"></script>
+        <script src="javascripts/google-code-prettify/prettify.js"></script>
+
+        <script src="javascripts/application.js"></script>
+
     </body>
 </html>

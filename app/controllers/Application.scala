@@ -9,7 +9,9 @@ import org.jsoup.Jsoup
 object Application extends Controller {
 
   def index = Action {
-    Ok(views.html.index())
+ //   Ok(views.html.index())
+    SourceInstances.updateAll()
+    Ok(views.html.bash("Микс", SourceInstances.random))
   }
 
   def agree = Action {
@@ -17,35 +19,28 @@ object Application extends Controller {
   }
 
   def ithappens = Action {
-    val document = new ContentExtractor("http://ithappens.ru")
-    val str = document.html.select("p[id]")
-//    val rssUrl = document.select("link[rel=alternate][type=application/rss+xml]").attr("href")
-
-    Ok(views.html.bash("ithappens.ru", document.Format(str, 0).toString))
+    SourceInstances.updateAll()
+    Ok(views.html.bash("ithappens.ru", SourceInstances.instance_ithappens.getContentAsStringBySite("ithappens.ru")))
   }
 
   def bash = Action {
-    val document = new ContentExtractor("http://bash.im")
-    val str = document.html.getElementsByClass("text")
-    Ok(views.html.bash("bash.im", document.Format(str, 0).toString))
+    SourceInstances.updateAll()
+    Ok(views.html.bash("bash.im", SourceInstances.instance_bash.getContentAsStringBySite("bash.im")))
   }
 
   def zadolbali = Action {
-    val document = new ContentExtractor("http://zadolba.li")
-    val str = document.html.getElementsByClass("the")
-    Ok(views.html.bash("zadolba.li", document.Format(str, 0).toString))
+    SourceInstances.updateAll()
+    Ok(views.html.bash("zadolba.li", SourceInstances.instance_zadolbali.getContentAsStringBySite("zadolba.li")))
   }
 
   def shortiki = Action {
-    val document = new ContentExtractor("http://shortiki.com")
-    val str = document.html.getElementsByClass("shortik")
-    Ok(views.html.bash("shortiki.com", document.Format(str, 0).toString))
+    SourceInstances.updateAll()
+    Ok(views.html.bash("shortiki.com", SourceInstances.instance_shortiki.getContentAsStringBySite("shortiki.com")))
   }
 
   def anekdot = Action {
-    val document = new ContentExtractor("http://www.anekdot.ru/last/j.html")
-    val str = document.html.getElementsByClass("text")
-    Ok(views.html.bash("anekdot.ru", document.Format(str, 0).toString))
+    SourceInstances.updateAll()
+    Ok(views.html.bash("anekdot.ru", SourceInstances.instance_anekdot.getContentAsStringBySite("anekdot.ru")))
   }
 
 }
