@@ -8,10 +8,12 @@ import org.jsoup.Jsoup
 
 object Application extends Controller {
 
+  val si = SourceInstances
+
   def index = Action {
  //   Ok(views.html.index())
-    SourceInstances.updateAll()
-    Ok(views.html.bash("Микс", SourceInstances.random))
+    si.updateAll()
+    Ok(views.html.bash("Микс", si.random))
   }
 
   def agree = Action {
@@ -19,28 +21,28 @@ object Application extends Controller {
   }
 
   def ithappens = Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("ithappens.ru", SourceInstances.instance_ithappens.getContentAsStringBySite("ithappens.ru")))
+    si.updateAll()
+    Ok(views.html.bash("ithappens.ru", si.instance_ithappens.getContentAsStringBySite("ithappens.ru")))
   }
 
   def bash(name: Option[String])= Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("bash.im", SourceInstances.instance_bash.getContentAsStringByName(name.getOrElse("bash"))))
+    si.updateAll()
+    Ok(views.html.bash("bash.im", si.instance_bash.getContentAsStringByName(name.getOrElse("bash"))))
   }
 
   def zadolbali = Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("zadolba.li", SourceInstances.instance_zadolbali.getContentAsStringBySite("zadolba.li")))
+    si.updateAll()
+    Ok(views.html.bash("zadolba.li", si.instance_zadolbali.getContentAsStringBySite("zadolba.li")))
   }
 
   def shortiki = Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("shortiki.com", SourceInstances.instance_shortiki.getContentAsStringBySite("shortiki.com")))
+    si.updateAll()
+    Ok(views.html.bash("shortiki.com", si.instance_shortiki.getContentAsStringBySite("shortiki.com")))
   }
 
   def anekdot(name: Option[String]) = Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("anekdot.ru", SourceInstances.instance_anekdot.getContentAsStringByName(name.getOrElse("new anekdot"))))
+    si.updateAll()
+    Ok(views.html.bash("anekdot.ru", si.instance_anekdot.getContentAsStringByName(name.getOrElse("new anekdot"))))
   }
 
 }
