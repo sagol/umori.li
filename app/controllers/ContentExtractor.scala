@@ -7,7 +7,7 @@ import java.util
 
 class ContentExtractor (val site: Site) {
 
-  val connection = Jsoup.connect(site.url)
+  val connection = Jsoup.connect(site.url).timeout(60000)
   var html = connection.get()
   var content = html.select(site.parsel)
 

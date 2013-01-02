@@ -2,6 +2,9 @@ package controllers
 
 import play.api.mvc.Action
 import javax.lang.model.util.Elements
+import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,6 +18,8 @@ class SourceInstance (val sites: List[Site]) {
   type Instance = List[ContentExtractor]
 
   var instance:Instance = List()
+
+  val whitelist = Whitelist.relaxed().addTags("div", "p").addAttributes("div", "class").addAttributes("p", "class")
 
   def prepareInstance (): Boolean = {
     if (!sites.isEmpty) {
@@ -36,7 +41,7 @@ class SourceInstance (val sites: List[Site]) {
     def get (url: String, list: Instance): String = {
       if (list.isEmpty) ""
       else if (list.head.site.url != url) get(url, list.tail)
-        else list.head.getContent().toString
+        else Jsoup.clean(list.head.getContent().toString, whitelist)
     }
     if (!url.isEmpty)
       get (url, instance)
@@ -44,7 +49,7 @@ class SourceInstance (val sites: List[Site]) {
   }
   def getContentAsStringByName (name: String): String = {
     def get (name: String, list: Instance, acc: String): String = {
-      if (list.isEmpty) acc
+      if (list.isEmpty) Jsoup.clean(acc, whitelist)
       else if (list.head.site.name != name) get(name, list.tail, acc)
         else get(name, list.tail, list.head.getContent().toString + acc)
     }
@@ -54,7 +59,7 @@ class SourceInstance (val sites: List[Site]) {
   }
   def getContentAsStringBySite (site: String): String = {
     def get (site: String, list: Instance, acc: String): String = {
-      if (list.isEmpty) acc
+      if (list.isEmpty) Jsoup.clean(acc, whitelist)
       else if (list.head.site.site != site) get(site, list.tail, acc)
         else get(site, list.tail, list.head.getContent().toString + acc)
     }
