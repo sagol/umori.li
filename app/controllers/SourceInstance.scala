@@ -4,6 +4,7 @@ import play.api.mvc.Action
 import javax.lang.model.util.Elements
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
+import org.apache.commons.lang3.StringEscapeUtils
 
 
 /**
@@ -41,7 +42,7 @@ class SourceInstance (val sites: List[Site]) {
     def get (url: String, list: Instance): String = {
       if (list.isEmpty) ""
       else if (list.head.site.url != url) get(url, list.tail)
-        else Jsoup.clean(list.head.getContent().toString, whitelist)
+        else StringEscapeUtils.unescapeHtml4(Jsoup.clean(list.head.getRSSContent().toString, whitelist))
     }
     if (!url.isEmpty)
       get (url, instance)
@@ -49,9 +50,11 @@ class SourceInstance (val sites: List[Site]) {
   }
   def getContentAsStringByName (name: String): String = {
     def get (name: String, list: Instance, acc: String): String = {
-      if (list.isEmpty) Jsoup.clean(acc, whitelist)
+      if (list.isEmpty) {
+        StringEscapeUtils.unescapeHtml4(Jsoup.clean(acc, whitelist))
+      }
       else if (list.head.site.name != name) get(name, list.tail, acc)
-        else get(name, list.tail, list.head.getContent().toString + acc)
+        else get(name, list.tail, list.head.getRSSContent().toString + acc)
     }
     if (!name.isEmpty)
       get (name, instance, "")
@@ -59,9 +62,9 @@ class SourceInstance (val sites: List[Site]) {
   }
   def getContentAsStringBySite (site: String): String = {
     def get (site: String, list: Instance, acc: String): String = {
-      if (list.isEmpty) Jsoup.clean(acc, whitelist)
+      if (list.isEmpty) StringEscapeUtils.unescapeHtml4(Jsoup.clean(acc, whitelist))
       else if (list.head.site.site != site) get(site, list.tail, acc)
-        else get(site, list.tail, list.head.getContent().toString + acc)
+        else get(site, list.tail, list.head.getRSSContent().toString + acc)
     }
     if (!site.isEmpty)
       get (site, instance, "")
