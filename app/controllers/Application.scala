@@ -8,10 +8,20 @@ import org.jsoup.Jsoup
 
 object Application extends Controller {
 
+  def updateAll(): Boolean = {
+    try {
+      SourceInstances.updateAll()
+      true
+    } catch {
+      case _: ExceptionInInitializerError | _:NoClassDefFoundError => false
+    }
+  }
+
   def index = Action {
- //   Ok(views.html.index())
-    SourceInstances.updateAll()
-    Ok(views.html.bash("Микс", SourceInstances.random))
+    if (updateAll()) {
+      Ok(views.html.bash("Микс", SourceInstances.random))
+    }
+    else Ok(views.html.bash("Ошибка", "Неизвестная ошибка"))
   }
 
   def agree = Action {
@@ -19,28 +29,38 @@ object Application extends Controller {
   }
 
   def ithappens = Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("ithappens.ru", SourceInstances.instance_ithappens.getContentAsStringBySite("ithappens.ru")))
+    if (updateAll()) {
+      Ok(views.html.bash("ithappens.ru", SourceInstances.instance_ithappens.getContentAsStringBySite("ithappens.ru")))
+    }
+    else Ok(views.html.bash("Ошибка", "Неизвестная ошибка"))
   }
 
   def bash(name: Option[String])= Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("bash.im", SourceInstances.instance_bash.getContentAsStringByName(name.getOrElse("bash"))))
+    if (updateAll()) {
+      Ok(views.html.bash("bash.im", SourceInstances.instance_bash.getContentAsStringByName(name.getOrElse("bash"))))
+    }
+    else Ok(views.html.bash("Ошибка", "Неизвестная ошибка"))
   }
 
   def zadolbali = Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("zadolba.li", SourceInstances.instance_zadolbali.getContentAsStringBySite("zadolba.li")))
+    if (updateAll()) {
+      Ok(views.html.bash("zadolba.li", SourceInstances.instance_zadolbali.getContentAsStringBySite("zadolba.li")))
+    }
+    else Ok(views.html.bash("Ошибка", "Неизвестная ошибка"))
   }
 
   def shortiki = Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("shortiki.com", SourceInstances.instance_shortiki.getContentAsStringBySite("shortiki.com")))
+    if (updateAll()) {
+      Ok(views.html.bash("shortiki.com", SourceInstances.instance_shortiki.getContentAsStringBySite("shortiki.com")))
+    }
+    else Ok(views.html.bash("Ошибка", "Неизвестная ошибка"))
   }
 
   def anekdot(name: Option[String]) = Action {
-    SourceInstances.updateAll()
-    Ok(views.html.bash("anekdot.ru", SourceInstances.instance_anekdot.getContentAsStringByName(name.getOrElse("new anekdot"))))
+    if (updateAll()) {
+      Ok(views.html.bash("anekdot.ru", SourceInstances.instance_anekdot.getContentAsStringByName(name.getOrElse("new anekdot"))))
+    }
+    else Ok(views.html.bash("Ошибка", "Неизвестная ошибка"))
   }
 
 }

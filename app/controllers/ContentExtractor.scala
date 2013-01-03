@@ -1,29 +1,39 @@
 package controllers
 
-import org.jsoup.Jsoup
+import org.jsoup.{UnsupportedMimeTypeException, HttpStatusException, Jsoup}
 import org.jsoup.nodes.{Entities, Element, Document}
 import org.jsoup.select.Elements
-import java.util
 import org.jsoup.parser.Parser
-import org.jsoup.nodes.Entities.EscapeMode
-import java.net.URL
-import org.apache.commons.lang3.StringEscapeUtils
+import java.net.{SocketTimeoutException, MalformedURLException, UnknownHostException, URL}
+import java.io.IOException
 
 class ContentExtractor (val site: Site) {
 
-  val connection = Jsoup.connect(site.url).timeout(60000)
-  var html = connection.get()
+  val connection = Jsoup.connect(site.url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000)
+
+  var html:Document = {
+    if (connection != null)
+      try {
+        connection.get()
+      }
+      catch {
+        case _:IOException | _:MalformedURLException | _:HttpStatusException |
+             _:UnsupportedMimeTypeException | _:SocketTimeoutException |
+             _:java.net.UnknownHostException => Document.createShell("")
+      }
+    else
+      Document.createShell("")}
   var content = html.select(site.parsel)
   var rss = html.select("link[type=application/rss+xml]")
 
   def getRSSContent():Elements = {
     if (rss.size() > 0 && rss.get(0).attr("href").contains(site.url)) {
       try {
-        val rssConnection = Jsoup.connect(rss.get(0).attr("href")).ignoreContentType(true).timeout(60000)
+        val rssConnection = Jsoup.connect(rss.get(0).attr("href")).ignoreHttpErrors(true).ignoreContentType(true).timeout(60000)
         val rssParser = Jsoup.parse(rssConnection.get().html(), rss.get(0).text(), Parser.xmlParser())
         rssParser.select("item").select("description").tagName("div").addClass("well")
       } catch {
-        case _: IllegalArgumentException | _: NullPointerException => getContent()
+        case _: IllegalArgumentException | _: NullPointerException | _: UnknownHostException => getContent()
       }
     }
     else getContent()

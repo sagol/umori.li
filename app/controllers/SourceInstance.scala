@@ -24,7 +24,13 @@ class SourceInstance (val sites: List[Site]) {
 
   def prepareInstance (): Boolean = {
     if (!sites.isEmpty) {
-      for (site <- sites) instance ::= (new ContentExtractor(site))
+      for (site <- sites) {
+        try {
+          instance ::= (new ContentExtractor(site))
+        } catch {
+          case e: ExceptionInInitializerError => null
+        }
+      }
       true
     }
     else false
@@ -32,7 +38,9 @@ class SourceInstance (val sites: List[Site]) {
 
   def update (): Boolean = {
     if (!instance.isEmpty) {
-      for (instance <- instance) instance.update()
+      for (inst <- instance) {
+        if (inst != null) inst.update()
+      }
     true
     }
     else false

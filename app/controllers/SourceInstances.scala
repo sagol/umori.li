@@ -35,18 +35,27 @@ object SourceInstances {
     var len = num
     if (len == 0) {
       for (i <- 0 to 4) {
-        val ysz = instances(i).instance.size - 1
-        for (y <- 0 to ysz) {
-          len += instances(i).instance(y).content.size()
+        if (instances(i).instance != null) {
+          val ysz = instances(i).instance.size - 1
+          for (y <- 0 to ysz) {
+           len += instances(i).instance(y).content.size()
+          }
         }
       }
     }
 
     for (i <- 0 to len) {
       val j = rnd.nextInt(5)
-      val k = rnd.nextInt(instances(j).instance.size)
-      val l = instances(j).instance(k).content.size()
-      tpl ::= (j, k, rnd.nextInt(l))
+      try {
+        if (instances(j).instance.size > 0) {
+          val k = rnd.nextInt(instances(j).instance.size)
+          val l = instances(j).instance(k).content.size()
+          if (l > 0)
+            tpl ::= (j, k, rnd.nextInt(l))
+        }
+      } catch {
+        case e:IllegalArgumentException =>
+      }
     }
 
     val elems = new Elements()
