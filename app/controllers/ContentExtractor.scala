@@ -28,11 +28,16 @@ class ContentExtractor (val site: Site) {
   var correctrss = false
 
   def getRSSConnection = {
-    if (rss_links.size() > 0 && rss_links.get(0).attr("href").contains(site.url)) {
-      Jsoup.connect(rss_links.get(0).attr("href")).ignoreContentType(true).ignoreHttpErrors(true).
-        timeout(60000)
+    try {
+      if (rss_links.size() > 0 && rss_links.get(0).attr("href").contains(site.url)) {
+        Jsoup.connect(rss_links.get(0).attr("href")).ignoreContentType(true).ignoreHttpErrors(true).
+          timeout(60000)
+      }
+      else null
+    } catch {
+        case _: IllegalArgumentException | _: NullPointerException | _: UnknownHostException => null
     }
-    else null
+
   }
 
   var rssconnection = getRSSConnection
@@ -74,7 +79,7 @@ class ContentExtractor (val site: Site) {
 //        stream.close()
         addLinks(rssParser.select("item"))
       } catch {
-        case _: IllegalArgumentException | _: NullPointerException | _: UnknownHostException => getContent()
+        case _: IllegalArgumentException | _: NullPointerException | _: ArrayIndexOutOfBoundsException => getContent()
       }
     }
     else getContent()
