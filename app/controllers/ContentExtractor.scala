@@ -24,8 +24,32 @@ class ContentExtractor (val site: Site) {
     else
       Document.createShell("")}
   var content = html.select(site.parsel)
-  var rss = html.select("link[type=application/rss+xml]")
+  var rss_links = html.select("link[type=application/rss+xml]")
   var correctrss = false
+
+  def getRSSConnection = {
+    if (rss_links.size() > 0 && rss_links.get(0).attr("href").contains(site.url)) {
+      Jsoup.connect(rss_links.get(0).attr("href")).ignoreContentType(true).ignoreHttpErrors(true).
+        timeout(60000)
+    }
+    else null
+  }
+
+  var rssconnection = getRSSConnection
+
+  var rss:Document = {
+    if (rssconnection != null)
+      try {
+        rssconnection.get()
+      }
+      catch {
+        case _:IOException | _:MalformedURLException | _:HttpStatusException |
+             _:UnsupportedMimeTypeException | _:SocketTimeoutException |
+             _:java.net.UnknownHostException => Document.createShell("")
+      }
+    else
+      Document.createShell("")}
+
 
   def addLinks (elemsin:Elements):Elements = {
     if (elemsin.size() > 0) correctrss = true
@@ -40,25 +64,53 @@ class ContentExtractor (val site: Site) {
     elemsout
   }
   def getRSSContent():Elements = {
-    if (rss.size() > 0 && rss.get(0).attr("href").contains(site.url)) {
-      try {
-        val url = new URL(rss.get(0).attr("href"))
+    if (rssconnection != null) {
+//      try {
+/*        val url = new URL(rss.get(0).attr("href"))
         val stream = url.openStream()
-        val rssParser = Jsoup.parse(stream, site.encoding, rss.get(0).text(), Parser.xmlParser())
-//        val rssParser = Jsoup.parse(Jsoup.connect(rss.get(0).attr("href")).ignoreContentType(true).ignoreHttpErrors(true).
-//          timeout(60000).get().html(), rss.get(0).text(), Parser.xmlParser())
-        stream.close()
+        val rssParser = Jsoup.parse(stream, site.encoding, rss.get(0).attr("href"), Parser.xmlParser())
+*/
+        val rssParser = Jsoup.parse(rss.toString, rss_links.get(0).attr("href"), Parser.xmlParser())
+//        stream.close()
         addLinks(rssParser.select("item"))
-      } catch {
-        case _: IllegalArgumentException | _: NullPointerException | _: UnknownHostException => getContent()
-      }
+//      } catch {
+//        case _: IllegalArgumentException | _: NullPointerException | _: UnknownHostException => getContent()
+//      }
     }
     else getContent()
   }
 
   def update () {
-    this.html = connection.get()
-    this.content = html.select(site.parsel)
+    if (correctrss == false) {
+      html = {
+        if (connection != null)
+          try {
+            connection.get()
+          }
+          catch {
+            case _:IOException | _:MalformedURLException | _:HttpStatusException |
+                 _:UnsupportedMimeTypeException | _:SocketTimeoutException |
+                 _:java.net.UnknownHostException => Document.createShell("")
+          }
+        else
+          Document.createShell("")}
+      content = html.select(site.parsel)
+    }
+    else
+    {
+      rss = {
+      if (rssconnection != null)
+        try {
+          rssconnection.get()
+        }
+        catch {
+          case _:IOException | _:MalformedURLException | _:HttpStatusException |
+               _:UnsupportedMimeTypeException | _:SocketTimeoutException |
+               _:java.net.UnknownHostException => Document.createShell("")
+        }
+      else
+        Document.createShell("")}
+    }
   }
 
   def getContent (id: Int = -1, count: Int = 1): Elements = {
