@@ -20,7 +20,8 @@ class SourceInstance (val sites: List[Site]) {
 
   var instance:Instance = List()
 
-  val whitelist = Whitelist.relaxed().addTags("div", "p").addAttributes("div", "class").addAttributes("p", "class")
+  val whitelist = Whitelist.simpleText().addTags("br").addTags("div", "p").
+    addAttributes("div", "class").addAttributes("p", "class")
 
   def prepareInstance (): Boolean = {
     if (!sites.isEmpty) {
@@ -50,7 +51,7 @@ class SourceInstance (val sites: List[Site]) {
     def get (url: String, list: Instance): String = {
       if (list.isEmpty) ""
       else if (list.head.site.url != url) get(url, list.tail)
-        else StringEscapeUtils.unescapeHtml4(Jsoup.clean(list.head.getRSSContent().toString, whitelist))
+        else Jsoup.clean(StringEscapeUtils.unescapeHtml4(list.head.getRSSContent().toString), whitelist)
     }
     if (!url.isEmpty)
       get (url, instance)
@@ -59,7 +60,7 @@ class SourceInstance (val sites: List[Site]) {
   def getContentAsStringByName (name: String): String = {
     def get (name: String, list: Instance, acc: String): String = {
       if (list.isEmpty) {
-        StringEscapeUtils.unescapeHtml4(Jsoup.clean(acc, whitelist))
+        Jsoup.clean(StringEscapeUtils.unescapeHtml4(acc), whitelist)
       }
       else if (list.head.site.name != name) get(name, list.tail, acc)
         else get(name, list.tail, list.head.getRSSContent().toString + acc)
@@ -70,7 +71,7 @@ class SourceInstance (val sites: List[Site]) {
   }
   def getContentAsStringBySite (site: String): String = {
     def get (site: String, list: Instance, acc: String): String = {
-      if (list.isEmpty) StringEscapeUtils.unescapeHtml4(Jsoup.clean(acc, whitelist))
+      if (list.isEmpty) Jsoup.clean(StringEscapeUtils.unescapeHtml4(acc), whitelist)
       else if (list.head.site.site != site) get(site, list.tail, acc)
         else get(site, list.tail, list.head.getRSSContent().toString + acc)
     }

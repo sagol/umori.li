@@ -30,7 +30,7 @@ class ContentExtractor (val site: Site) {
     if (rss.size() > 0 && rss.get(0).attr("href").contains(site.url)) {
       try {
         val rssConnection = Jsoup.connect(rss.get(0).attr("href")).ignoreHttpErrors(true).ignoreContentType(true).timeout(60000)
-        val rssParser = Jsoup.parse(rssConnection.get().html(), rss.get(0).text(), Parser.xmlParser())
+        val rssParser = Jsoup.parse(rssConnection.get().html(), rss.get(0).text(), Parser.htmlParser())
         rssParser.select("item").select("description").tagName("div").addClass("well")
       } catch {
         case _: IllegalArgumentException | _: NullPointerException | _: UnknownHostException => getContent()
