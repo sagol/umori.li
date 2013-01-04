@@ -33,6 +33,7 @@ object SourceInstances {
     var tpl = List[(Int, Int, Int)]()
     val rnd = new Random()
     var len = num
+
     if (len == 0) {
       for (i <- 0 to 4) {
         if (instances(i).instance != null) {
