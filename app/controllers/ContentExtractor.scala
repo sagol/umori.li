@@ -42,7 +42,7 @@ class ContentExtractor (val site: Site) {
       try {
         val url = new URL(rss.get(0).attr("href"))
 //        val rssParser = Jsoup.parse(url.openStream(), site.encoding, rss.get(0).text(), Parser.xmlParser())
-        val rssParser = Jsoup.parse(Jsoup.connect(rss.get(0).text()).ignoreContentType(true).ignoreHttpErrors(true).
+        val rssParser = Jsoup.parse(Jsoup.connect(rss.get(0).attr("href")).ignoreContentType(true).ignoreHttpErrors(true).
           timeout(60000).get().html(), rss.get(0).text(), Parser.xmlParser())
         addLinks(rssParser.select("item"))
       } catch {
