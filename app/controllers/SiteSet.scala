@@ -7,11 +7,11 @@ package controllers
  * Time: 22:08
  * xxxx
  */
-class Site(val site: String, val name: String, val url: String, val parsel: String) {
+class Site(val site: String, val name: String, val url: String, val parsel: String, val encoding: String) {
 
   override def toString: String =
     "Site: " + site + "\n" + "Name: " + name + " " +
-      "Url: " + url + " [" + parsel + "]"
+      "Url: " + url + " [" + parsel + "]" + " - " + encoding
 
 }
 

@@ -20,8 +20,8 @@ class SourceInstance (val sites: List[Site]) {
 
   var instance:Instance = List()
 
-  val whitelist = Whitelist.simpleText().addTags("br").addTags("div", "p").
-    addAttributes("div", "class").addAttributes("p", "class")
+  val whitelist = Whitelist.relaxed().addTags("br").addTags("div", "p").
+    addAttributes("div", "class").addAttributes("p", "class").addAttributes("div", "site")
 
   def prepareInstance (): Boolean = {
     if (!sites.isEmpty) {

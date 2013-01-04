@@ -9,29 +9,40 @@ import java.io.IOException
 
 class ContentExtractor (val site: Site) {
 
-  val connection = Jsoup.connect(site.url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000)
-
   var html:Document = {
-    if (connection != null)
       try {
-        connection.get()
+        Jsoup.connect(site.url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000).get()
       }
       catch {
         case _:IOException | _:MalformedURLException | _:HttpStatusException |
              _:UnsupportedMimeTypeException | _:SocketTimeoutException |
              _:java.net.UnknownHostException => Document.createShell("")
       }
-    else
-      Document.createShell("")}
+  }
+
   var content = html.select(site.parsel)
   var rss = html.select("link[type=application/rss+xml]")
+  var correctrss = false
+
+  def addLinks (elemsin:Elements):Elements = {
+    if (elemsin.size() > 0) correctrss = true
+    else correctrss = false
+    val i = elemsin.iterator()
+    val elemsout = new Elements()
+    while(i.hasNext) {
+      val e = i.next()
+      elemsout.add(e.select("description").get(0).attr("site", e.select("link").text())
+        .tagName("div").addClass("well"))
+    }
+    elemsout
+  }
 
   def getRSSContent():Elements = {
     if (rss.size() > 0 && rss.get(0).attr("href").contains(site.url)) {
       try {
-        val rssConnection = Jsoup.connect(rss.get(0).attr("href")).ignoreHttpErrors(true).ignoreContentType(true).timeout(60000)
-        val rssParser = Jsoup.parse(rssConnection.get().html(), rss.get(0).text(), Parser.htmlParser())
-        rssParser.select("item").select("description").tagName("div").addClass("well")
+        val url = new URL(rss.get(0).attr("href"))
+        val rssParser = Jsoup.parse(url.openStream(), site.encoding, rss.get(0).text(), Parser.xmlParser())
+        addLinks(rssParser.select("item"))
       } catch {
         case _: IllegalArgumentException | _: NullPointerException | _: UnknownHostException => getContent()
       }
@@ -40,24 +51,21 @@ class ContentExtractor (val site: Site) {
   }
 
   def update () {
-    this.html = connection.get()
-    this.content = html.select(site.parsel)
+    if (correctrss == false) {
+      this.html = Jsoup.connect(site.url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000).get()
+      this.content = html.select(site.parsel)
+    }
   }
 
   def getContent (id: Int = -1, count: Int = 1): Elements = {
+    correctrss = false
     var elems = content
     if (id != -1 && id < content.size()) {
       elems = new Elements()
       for (i <- id to id + count)
         elems.add(content.get(i))
     }
-    elems.tagName("div").addClass("well")
+    //нада тоже доделать формирование полного адреса ссылки
+    elems.attr("site", site.url).tagName("div").addClass("well")
   }
-
-  def GetClassSet (name: String): java.util.Set[String] = {
-    val set : java.util.Set[String] = new java.util.HashSet[String]()
-    set.add(name)
-    set
-  }
-
 }
