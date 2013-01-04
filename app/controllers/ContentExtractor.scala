@@ -26,7 +26,7 @@ class ContentExtractor (val site: Site) {
   var content = html.select(site.parsel)
   var rss_links = html.select("link[type=application/rss+xml]")
   var correctrss = false
-
+/*
   def getRSSConnection = {
     try {
       if (rss_links.size() > 0 && rss_links.get(0).attr("href").contains(site.url)) {
@@ -55,6 +55,7 @@ class ContentExtractor (val site: Site) {
     else
       Document.createShell("")}
 
+  */
 
   def addLinks (elemsin:Elements):Elements = {
     if (elemsin.size() > 0) correctrss = true
@@ -69,22 +70,27 @@ class ContentExtractor (val site: Site) {
     elemsout
   }
   def getRSSContent():Elements = {
-    if (rssconnection != null) {
+    if (rss_links.size() > 0 && rss_links.get(0).attr("href").contains(site.url)) {
+//    if (rssconnection != null) {
       try {
 /*        val url = new URL(rss.get(0).attr("href"))
         val stream = url.openStream()
         val rssParser = Jsoup.parse(stream, site.encoding, rss.get(0).attr("href"), Parser.xmlParser())
 */
-        val rssParser = Jsoup.parse(rss.toString, rss_links.get(0).attr("href"), Parser.xmlParser())
+        val rssconnection = Jsoup.connect(rss_links.get(0).attr("href")).ignoreContentType(true).ignoreHttpErrors(true).
+          timeout(60000)
+        val rss = rssconnection.get()
+        val rssParser = Jsoup.parse(rss.html(), rss_links.get(0).attr("href"), Parser.xmlParser())
 //        stream.close()
         addLinks(rssParser.select("item"))
       } catch {
-        case _: IllegalArgumentException | _: NullPointerException | _: ArrayIndexOutOfBoundsException => getContent()
+        case _: IllegalArgumentException | _: NullPointerException |
+             _: ArrayIndexOutOfBoundsException | _: UnknownHostException => getContent()
       }
     }
     else getContent()
   }
-
+/*
   def update () {
     if (correctrss == false) {
       html = {
@@ -116,6 +122,11 @@ class ContentExtractor (val site: Site) {
       else
         Document.createShell("")}
     }
+  }
+*/
+  def update () {
+    html = connection.get()
+    content = html.select(site.parsel)
   }
 
   def getContent (id: Int = -1, count: Int = 1): Elements = {
