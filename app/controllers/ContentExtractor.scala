@@ -65,7 +65,7 @@ class ContentExtractor (val site: Site) {
   }
   def getRSSContent():Elements = {
     if (rssconnection != null) {
-//      try {
+      try {
 /*        val url = new URL(rss.get(0).attr("href"))
         val stream = url.openStream()
         val rssParser = Jsoup.parse(stream, site.encoding, rss.get(0).attr("href"), Parser.xmlParser())
@@ -73,9 +73,9 @@ class ContentExtractor (val site: Site) {
         val rssParser = Jsoup.parse(rss.toString, rss_links.get(0).attr("href"), Parser.xmlParser())
 //        stream.close()
         addLinks(rssParser.select("item"))
-//      } catch {
-//        case _: IllegalArgumentException | _: NullPointerException | _: UnknownHostException => getContent()
-//      }
+      } catch {
+        case _: IllegalArgumentException | _: NullPointerException | _: UnknownHostException => getContent()
+      }
     }
     else getContent()
   }
