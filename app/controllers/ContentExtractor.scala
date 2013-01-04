@@ -9,17 +9,20 @@ import java.io.IOException
 
 class ContentExtractor (val site: Site) {
 
+  val connection = Jsoup.connect(site.url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000)
+
   var html:Document = {
+    if (connection != null)
       try {
-        Jsoup.connect(site.url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000).get()
+        connection.get()
       }
       catch {
         case _:IOException | _:MalformedURLException | _:HttpStatusException |
              _:UnsupportedMimeTypeException | _:SocketTimeoutException |
              _:java.net.UnknownHostException => Document.createShell("")
       }
-  }
-
+    else
+      Document.createShell("")}
   var content = html.select(site.parsel)
   var rss = html.select("link[type=application/rss+xml]")
   var correctrss = false
@@ -53,10 +56,8 @@ class ContentExtractor (val site: Site) {
   }
 
   def update () {
-    if (correctrss == false) {
-      this.html = Jsoup.connect(site.url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000).get()
-      this.content = html.select(site.parsel)
-    }
+    this.html = connection.get()
+    this.content = html.select(site.parsel)
   }
 
   def getContent (id: Int = -1, count: Int = 1): Elements = {
