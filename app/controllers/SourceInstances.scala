@@ -2,6 +2,9 @@ package controllers
 
 import java.util.Random
 import org.jsoup.select.Elements
+import org.jsoup.Jsoup
+import org.apache.commons.lang3.StringEscapeUtils
+import org.jsoup.safety.Whitelist
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,12 +62,15 @@ object SourceInstances {
       }
     }
 
+    val whitelist = Whitelist.simpleText().addTags("br").addTags("div", "p").
+      addAttributes("div", "class").addAttributes("p", "class").addAttributes("div", "site")
+
     val elems = new Elements()
     val s = tpl.toSet
     for (i <- s) {
       elems.add(instances(i._1).instance(i._2).getContent.get(i._3))
     }
-    elems.toString
+    Jsoup.clean(StringEscapeUtils.unescapeHtml4(elems.toString), whitelist)
   }
 
   var random = getRandomMix ()

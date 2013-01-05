@@ -15,7 +15,13 @@ class ContentExtractor (val site: Site) {
 
   private def getDocument (url: String) = {
     try {
-      getConnection(url).get()
+      if (isRSSlink){
+        val uri = new URL(url)
+        val stream = uri.openStream()
+        val rssParser = Jsoup.parse(stream, site.encoding, url, Parser.xmlParser())
+        stream.close()
+        rssParser
+      } else getConnection(url).get()
     } catch {
         case _:IOException | _:MalformedURLException | _:HttpStatusException |
              _:UnsupportedMimeTypeException | _:SocketTimeoutException |
@@ -49,10 +55,9 @@ class ContentExtractor (val site: Site) {
   private var cache: Elements = new Elements()
   private var lastUpdateTime:Long = 0
 
-
   def getContent: Elements = {
     if (System.currentTimeMillis() - lastUpdateTime < 60000) cache
-    else {  // лочить?
+    else {
       lastUpdateTime = System.currentTimeMillis()
       val link = getLink
       if (link == null) cache
