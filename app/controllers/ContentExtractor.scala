@@ -9,6 +9,69 @@ import java.io.IOException
 
 class ContentExtractor (val site: Site) {
 
+  private def getConnection (url: String) = {
+    Jsoup.connect(url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000)
+  }
+
+  private def getDocument (url: String) = {
+    try {
+      getConnection(url).get()
+    } catch {
+        case _:IOException | _:MalformedURLException | _:HttpStatusException |
+             _:UnsupportedMimeTypeException | _:SocketTimeoutException |
+             _:java.net.UnknownHostException => Document.createShell("")
+      }
+  }
+
+  private def getRSSlink = {
+    val links = getDocument(site.url).select("link[type=application/rss+xml]")
+    if (links.size() > 0) {
+      val link = links.get(0).attr("href")
+      if (link.contains(site.url)) link else null
+    }
+    else null
+  }
+
+  var isRSSlink = false
+
+  private def getLink = {
+    val link = getRSSlink
+    if (link == null) site.url
+    else {
+      isRSSlink = true
+      link
+    }
+  }
+
+  def update () {
+  }
+
+  private var cache: Elements = new Elements()
+  private var lastUpdateTime:Long = 0
+
+
+  def getContent: Elements = {
+    if (System.currentTimeMillis() - lastUpdateTime < 60000) cache
+    else {  // лочить?
+      lastUpdateTime = System.currentTimeMillis()
+      val link = getLink
+      if (link == null) cache
+      else {
+        val document = getDocument(link)
+        val elems = if (isRSSlink) {
+          document.select("item").select("description")
+        }
+        else document.select(site.parsel)
+        cache = elems.tagName("div").addClass("well")
+        cache
+      }
+    }
+  }
+}
+
+/*
+class ContentExtractor2 (val site: Site) {
+
   val connection = Jsoup.connect(site.url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000)
 
   var html:Document = {
@@ -141,3 +204,4 @@ class ContentExtractor (val site: Site) {
     elems.attr("site", site.url).tagName("div").addClass("well")
   }
 }
+  */

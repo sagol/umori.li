@@ -39,7 +39,7 @@ object SourceInstances {
         if (instances(i).instance != null) {
           val ysz = instances(i).instance.size - 1
           for (y <- 0 to ysz) {
-           len += instances(i).instance(y).content.size()
+           len += instances(i).instance(y).getContent.size()
           }
         }
       }
@@ -50,7 +50,7 @@ object SourceInstances {
       try {
         if (instances(j).instance.size > 0) {
           val k = rnd.nextInt(instances(j).instance.size)
-          val l = instances(j).instance(k).content.size()
+          val l = instances(j).instance(k).getContent.size()
           if (l > 0)
             tpl ::= (j, k, rnd.nextInt(l))
         }
@@ -62,7 +62,7 @@ object SourceInstances {
     val elems = new Elements()
     val s = tpl.toSet
     for (i <- s) {
-      elems.add(instances(i._1).instance(i._2).getContent().get(i._3))
+      elems.add(instances(i._1).instance(i._2).getContent.get(i._3))
     }
     elems.toString
   }

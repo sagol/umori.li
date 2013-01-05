@@ -51,7 +51,7 @@ class SourceInstance (val sites: List[Site]) {
     def get (url: String, list: Instance): String = {
       if (list.isEmpty) ""
       else if (list.head.site.url != url) get(url, list.tail)
-        else Jsoup.clean(StringEscapeUtils.unescapeHtml4(list.head.getRSSContent().toString), whitelist)
+        else Jsoup.clean(StringEscapeUtils.unescapeHtml4(list.head.getContent.toString), whitelist)
     }
     if (!url.isEmpty)
       get (url, instance)
@@ -63,7 +63,7 @@ class SourceInstance (val sites: List[Site]) {
         Jsoup.clean(StringEscapeUtils.unescapeHtml4(acc), whitelist)
       }
       else if (list.head.site.name != name) get(name, list.tail, acc)
-        else get(name, list.tail, list.head.getRSSContent().toString + acc)
+        else get(name, list.tail, list.head.getContent.toString + acc)
     }
     if (!name.isEmpty)
       get (name, instance, "")
@@ -73,7 +73,7 @@ class SourceInstance (val sites: List[Site]) {
     def get (site: String, list: Instance, acc: String): String = {
       if (list.isEmpty) Jsoup.clean(StringEscapeUtils.unescapeHtml4(acc), whitelist)
       else if (list.head.site.site != site) get(site, list.tail, acc)
-        else get(site, list.tail, list.head.getRSSContent().toString + acc)
+        else get(site, list.tail, list.head.getContent.toString + acc)
     }
     if (!site.isEmpty)
       get (site, instance, "")
