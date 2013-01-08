@@ -55,20 +55,17 @@ class ContentExtractor (val site: Site) {
   private var cache: Elements = new Elements()
   private var lastUpdateTime:Long = 0
 
-  /*
-  def addLinks (elemsin:Elements):Elements = {
-    if (elemsin.size() > 0) correctrss = true
-    else correctrss = false
-    val i = elemsin.iterator()
-    val elemsout = new Elements()
-    while(i.hasNext) {
-      val e = i.next()
-      elemsout.add(e.select("description").get(0).attr("site", e.select("link").text())
-        .tagName("div").addClass("well"))
-    }
-    elemsout
+  private def addLinks (elemsin:Elements):Elements = {
+    if (elemsin.size() > 0) {
+      val i = elemsin.iterator()
+      val elemsout = new Elements()
+      while(i.hasNext) {
+        val e = i.next()
+        elemsout.add(e.select("description").get(0).attr("site", e.select("link").text()))
+      }
+      elemsout
+    } else elemsin
   }
-  */
 
   def getContent: Elements = {
     if (System.currentTimeMillis() - lastUpdateTime < 60000) cache
@@ -79,7 +76,7 @@ class ContentExtractor (val site: Site) {
       else {
         val document = getDocument(link)
         val elems = if (isRSSlink) {
-          document.select("item").select("description")
+          addLinks (document.select("item"))
         }
         else document.select(site.parsel)
         cache = elems.tagName("div").addClass("well")

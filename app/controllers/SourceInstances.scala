@@ -78,6 +78,7 @@ object SourceInstances {
   private def update(force: Boolean = false): Map[SourceInstance, Boolean] = {
     var map:Map[SourceInstance, Boolean] = Map()
     if (force || (System.currentTimeMillis() - lastUpdateTime > 60000)) {
+      System.gc()
       for (i <- this.instances) map += (i -> i.update())
       this.random = getRandomMix()
       this.lastUpdateTime = System.currentTimeMillis()
