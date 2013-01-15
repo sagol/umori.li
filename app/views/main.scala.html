@@ -43,7 +43,7 @@
                                 <a href="@routes.Application.shortiki()">shortiki.com</a>
                             </li>
                             <li class="dropdown @("active".when(nav == "anekdot.ru"))">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">anekdot.ru <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">anekdot.ru<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="@routes.Application.anekdot(Option("new anekdot"))">Анекдоты</a></li>
                                     <li><a href="@routes.Application.anekdot(Option("new story"))">Истории</a></li>
@@ -88,6 +88,15 @@
                     <li class="muted">·</li>
                     <li><a href="http://anekdot.ru">Anekdot.ru</a></li>
                 </ul>
+                    <div class="g-plusone container" data-annotation="inline" data-width="120"></div>
+                    <script type="text/javascript">
+                        window.___gcfg = {lang: 'ru'};
+                        (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                    </script>
             </div>
         </footer>
 
