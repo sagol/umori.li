@@ -15,7 +15,8 @@ class ContentExtractor (val site: Site) {
 
   private def getDocument (url: String) = {
     try {
-      if (isRSSlink){
+//      if (isRSSlink){
+      if (false){
         val uri = new URL(url)
         val stream = uri.openStream()
         val rssParser = Jsoup.parse(stream, site.encoding, url, Parser.xmlParser())

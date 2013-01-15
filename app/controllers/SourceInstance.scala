@@ -57,6 +57,7 @@ class SourceInstance (val sites: List[Site]) {
       get (url, instance)
     else ""
   }
+
   def getContentAsStringByName (name: String): String = {
     def get (name: String, list: Instance, acc: String): String = {
       if (list.isEmpty) {
@@ -69,6 +70,7 @@ class SourceInstance (val sites: List[Site]) {
       get (name, instance, "")
     else ""
   }
+
   def getContentAsStringBySite (site: String): String = {
     def get (site: String, list: Instance, acc: String): String = {
       if (list.isEmpty) Jsoup.clean(StringEscapeUtils.unescapeHtml4(acc), whitelist)
