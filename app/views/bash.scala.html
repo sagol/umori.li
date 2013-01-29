@@ -1,4 +1,15 @@
-@(title: String, body: String)
+@(title: String, body: scala.collection.mutable.LinkedHashSet[UmorElement])
 @main(Html(text = title), title) {
-    @Html(body)
+  @body.map { b =>
+      @if(b.link != null) {
+      <div class="well">
+         @Html(b.elementHtml)
+           <a class="btn btn-link offset10" href="@b.link.toString">link</a>
+      </div>
+      } else {
+          <div class="well">
+              @Html(b.elementHtml)
+          </div>
+      }
+  }
 }

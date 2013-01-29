@@ -10,6 +10,7 @@ GET     /zadolbali.html             controllers.Application.zadolbali
 GET     /shortiki.html              controllers.Application.shortiki
 GET     /anekdot.html               controllers.Application.anekdot(name: Option[String])
 GET     /agree.html                 controllers.Application.agree
+GET     /url.html                   controllers.Application.url(url: Option[String])
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -6,6 +6,7 @@ import org.jsoup.select.Elements
 import org.jsoup.parser.Parser
 import java.net.{SocketTimeoutException, MalformedURLException, UnknownHostException, URL}
 import java.io.IOException
+import collection.mutable
 
 class ContentExtractor (val site: Site) {
 
@@ -15,8 +16,7 @@ class ContentExtractor (val site: Site) {
 
   private def getDocument (url: String) = {
     try {
-//      if (isRSSlink){
-      if (false){
+      if (isRSSlink){ //временно закомментил, пока ссылки не нужны
         val uri = new URL(url)
         val stream = uri.openStream()
         val rssParser = Jsoup.parse(stream, site.encoding, url, Parser.xmlParser())
@@ -53,23 +53,34 @@ class ContentExtractor (val site: Site) {
   def update () {
   }
 
-  private var cache: Elements = new Elements()
-  private var lastUpdateTime:Long = 0
+  type Uelements = mutable.LinkedHashSet[UmorElement]
 
-  private def addLinks (elemsin:Elements):Elements = {
-    if (elemsin.size() > 0) {
-      val i = elemsin.iterator()
-      val elemsout = new Elements()
-      while(i.hasNext) {
-        val e = i.next()
-        elemsout.add(e.select("description").get(0).attr("site", e.select("link").text()))
-      }
-      elemsout
-    } else elemsin
+  private var _cache:Uelements = _
+  def cache = _cache
+  def cache_=(cache: Uelements) {
+    _cache = cache
   }
 
-  def getContent: Elements = {
-    if (System.currentTimeMillis() - lastUpdateTime < 60000) cache
+  private var lastUpdateTime:Long = 0
+
+  private def createList (elemsin:Elements, links:String, names:String):Uelements = {
+    if (elemsin.size() > 0) {
+      val i = elemsin.iterator()
+      var elemsout:Uelements = mutable.LinkedHashSet()
+      while(i.hasNext) {
+        val e = i.next()
+        val u = new UmorElement(site)
+        if (links != null) u.link_= (e.select(links).text())
+        else u.link_=(e.id().replaceAll("\\D+","")) //оставляем только цифры
+        u.element_= (e.select(names).get(0))
+        elemsout += u
+      }
+      elemsout
+    } else mutable.LinkedHashSet()
+  }
+
+  def content: Uelements = {
+    if (System.currentTimeMillis() - lastUpdateTime < 300000) cache
     else {
       lastUpdateTime = System.currentTimeMillis()
       val link = getLink
@@ -77,12 +88,18 @@ class ContentExtractor (val site: Site) {
       else {
         val document = getDocument(link)
         val elems = if (isRSSlink) {
-          addLinks (document.select("item"))
+          createList (document.select("item"), "link", "description")
         }
-        else document.select(site.parsel)
-        cache = elems.tagName("div").addClass("well")
+        else createList(document.select(site.parsel), null, site.parsel)   //<a title="Постоянная ссылка и обсуждения в социальных сетях" class="button_link" href="/id/621695/"
+        cache = elems
         cache
       }
     }
+  }
+
+   def contentHtml: String = {
+    var str:String = ""
+     content.foreach(x => str += x.elementHtml)
+    str
   }
 }

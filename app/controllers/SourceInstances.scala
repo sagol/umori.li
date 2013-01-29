@@ -1,10 +1,14 @@
 package controllers
 
 import java.util.Random
+import scala.Predef._
+import collection.mutable
+import org.jsoup.{UnsupportedMimeTypeException, HttpStatusException, Jsoup}
+import java.net.{SocketTimeoutException, MalformedURLException, URL}
+import org.jsoup.parser.Parser
+import java.io.IOException
+import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
-import org.jsoup.Jsoup
-import org.apache.commons.lang3.StringEscapeUtils
-import org.jsoup.safety.Whitelist
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,14 +29,73 @@ object SourceInstances {
 
   var lastUpdateTime = System.currentTimeMillis()
 
-    private def init(): Map[SourceInstance, Boolean] = {
+  private def init(): Map[SourceInstance, Boolean] = {
     var map:Map[SourceInstance, Boolean] = Map()
     for (i <- this.instances) map += (i -> i.prepareInstance())
     map
   }
   var instanceInitMap = init()
 
-  private def getRandomMix(num: Int = 0):String = {
+  def urlContent(url: String): mutable.LinkedHashSet[UmorElement] = {
+
+    def findInstanse(url: String, i: Int): SourceInstance ={
+      if (i >= instances.length) null
+      else if (url.contains(instances(i).sites.head.site)) instances(i)
+        else findInstanse(url, i + 1)
+    }
+
+    def findSite(url: String, sites: List[Site], i: Int): Site ={
+      if (i >= sites.length) null
+      else if (url.contains(sites(i).site)) sites(i)
+        else findSite(url, sites, i + 1)
+    }
+
+    def getConnection (url: String) = {
+      Jsoup.connect(url).ignoreContentType(true).ignoreHttpErrors(true).timeout(60000)
+    }
+
+    def getDocument (url: String) = {
+      try {
+         getConnection(url).get()
+      } catch {
+        case _:IOException | _:MalformedURLException | _:HttpStatusException |
+             _:UnsupportedMimeTypeException | _:SocketTimeoutException |
+             _:java.net.UnknownHostException => Document.createShell("")
+      }
+    }
+
+    val instance = findInstanse(url, 0)
+    val site = if (url != null && instance != null) findSite(url, instance.sites,0) else null
+
+    def content:mutable.LinkedHashSet[UmorElement] = {
+      val document = getDocument(url)
+      var elemsin = document.select(site.parsel)
+      if (elemsin.isEmpty) {               //"font-size: 16px; font-family: monospace, Courier New; max-width: 730px;"
+        elemsin = document.select("div")
+        for (i <- 0 to elemsin.size() - 1) {
+          if (!elemsin.get(i).attr("style").contains("font-size: 16px; font-family: monospace, Courier New; max-width: 730px;"))
+            elemsin.get(i).empty().removeAttr("style")
+        }
+        elemsin = elemsin.select("div[style]")
+      }
+      if (elemsin.size() > 0) {
+        val i = elemsin.iterator()
+        var elemsout:mutable.LinkedHashSet[UmorElement] = mutable.LinkedHashSet()
+        while(i.hasNext) {
+          val u = new UmorElement(site)
+          u.link_= (url)
+          u.element_= (i.next())
+          elemsout += u
+        }
+        elemsout
+      } else mutable.LinkedHashSet()
+    }
+
+    if (site == null) mutable.LinkedHashSet()
+    else content
+  }
+
+  private def randomMix(num: Int = 0): mutable.LinkedHashSet[UmorElement] = {
     var tpl = List[(Int, Int, Int)]()
     val rnd = new Random()
     var len = num
@@ -42,7 +105,8 @@ object SourceInstances {
         if (instances(i).instance != null) {
           val ysz = instances(i).instance.size - 1
           for (y <- 0 to ysz) {
-           len += instances(i).instance(y).getContent.size()
+            if (!instances(i).instance(y).site.name.contains("abyss"))
+              len += instances(i).instance(y).content.size
           }
         }
       }
@@ -52,35 +116,36 @@ object SourceInstances {
       val j = rnd.nextInt(5)
       try {
         if (instances(j).instance.size > 0) {
-          val k = rnd.nextInt(instances(j).instance.size)
-          val l = instances(j).instance(k).getContent.size()
-          if (l > 0)
-            tpl ::= (j, k, rnd.nextInt(l))
+          var k = rnd.nextInt(instances(j).instance.size)
+          while (instances(j).instance(k).site.name.contains("abyss"))
+            k = rnd.nextInt(instances(j).instance.size)
+          val l = instances(j).instance(k).content.size - 1
+          if (l > 1)
+            tpl ::= (j, k, rnd.nextInt(l) + 1)
         }
       } catch {
         case e:IllegalArgumentException =>
       }
     }
-
-    val whitelist = Whitelist.simpleText().addTags("br").addTags("div", "p").
-      addAttributes("div", "class").addAttributes("p", "class").addAttributes("div", "site")
-
-    val elems = new Elements()
+    var elems:mutable.LinkedHashSet[UmorElement] = mutable.LinkedHashSet()
     val s = tpl.toSet
     for (i <- s) {
-      elems.add(instances(i._1).instance(i._2).getContent.get(i._3))
+      val inst = instances(i._1).instance(i._2)
+      val cont = inst.content.toArray
+      val el = cont.apply(i._3)
+      elems += el
     }
-    Jsoup.clean(StringEscapeUtils.unescapeHtml4(elems.toString), whitelist)
+    elems
   }
 
-  var random = getRandomMix ()
+  var random = randomMix ()
 
   private def update(force: Boolean = false): Map[SourceInstance, Boolean] = {
     var map:Map[SourceInstance, Boolean] = Map()
     if (force || (System.currentTimeMillis() - lastUpdateTime > 60000)) {
       System.gc()
       for (i <- this.instances) map += (i -> i.update())
-      this.random = getRandomMix()
+      this.random = randomMix()
       this.lastUpdateTime = System.currentTimeMillis()
     }
     map

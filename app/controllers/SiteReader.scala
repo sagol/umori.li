@@ -25,7 +25,8 @@ object SiteReader {
         val url = map("url")
         val parsel = map("parsel")
         val encoding = map("encoding")
-        new Site(site, name.toString, url.toString, parsel.toString, encoding.toString)
+        val linkpar = map("linkpar")
+        new Site(site, name.toString, url.toString, parsel.toString, encoding.toString, linkpar.toString)
       }
 
     def getSiteData(site: String, json: String): List[Site] = {
@@ -35,7 +36,8 @@ object SiteReader {
         val url = map("url")
         val parsel = map("parsel")
         val encoding = map("encoding")
-        new Site(site, name.toString, url.toString, parsel.toString, encoding.toString)
+        val linkpar = map("linkpar")
+        new Site(site, name.toString, url.toString, parsel.toString, encoding.toString, linkpar.toString)
       }
     }
   }
@@ -49,7 +51,7 @@ object SiteReader {
     for (st <- sts) {
       val json = "{ \"site\": \"" + st.site + "\", \"name\": \"" + st.name + "\", \"url\": \"" +
         st.url + "\", \"parsel\": " +
-        st.parsel + "\", \"encoding\": \"" +st.encoding +"\" }"
+        st.parsel + "\", \"encoding\": \"" +st.encoding +"\", \"linkpar\": " +st.linkpar + "\" }"
       buf.append(json + ",\n")
     }
     buf.toString

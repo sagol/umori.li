@@ -1,13 +1,18 @@
 package controllers
 
 /**
- * Created with IntelliJ IDEA.
  * User: sagol
  * Date: 27.12.12
  * Time: 22:08
  * xxxx
  */
-class Site(val site: String, val name: String, val url: String, val parsel: String, val encoding: String) {
+class Site(
+    val site: String,
+    val name: String,
+    val url: String,
+    val parsel: String,
+    val encoding: String,
+    val linkpar: String) {
 
   override def toString: String =
     "Site: " + site + "\n" + "Name: " + name + " " +
