@@ -33,7 +33,7 @@ object Application extends Controller {
                   StringEscapeUtils.escapeHtml4(content.head.element.text().take(20)) + "\" />\n\t\t" +
                "<meta name=\"description\" content=\"" +
                   StringEscapeUtils.escapeHtml4(content.head.element.text().take(120)) + "\" />\n\t\t" +
-               "<link rel=\"image_src\" href=\"http://www.umori.li/assets/images/big_smile72.jpg\" />"
+               "<link rel=\"image_src\" href=\"http://www.umori.li/assets/images/big_smile72.png\" />"
     Ok(views.html.url("...", content)(meta))
   }
 

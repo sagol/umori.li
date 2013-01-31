@@ -1,5 +1,5 @@
 @(title: String, body: scala.collection.mutable.LinkedHashSet[UmorElement])
-@main(Html(text = title), title)(Html("<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />")) {
+@main(Html(text = title), title)(Html("<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />")){
   @body.map { b =>
       @if(b.link != null) {
       <div class="well">
@@ -7,8 +7,9 @@
            <ul class="footer-links">
              <li><a class="offset10" href="@b.link.toString">link</a></li>
              <li class="muted">·</li>
-             <li><a href="http://vkontakte.ru/share.php?url=@java.net.URLEncoder.encode("http://www.umori.li", "utf-8")@b.link&noparse=false"
-                    target="_blank">vk</a></li>
+             <li><a href="http://vkontakte.ru/share.php?url=@java.net.URLEncoder.encode(
+               "http://www.umori.li", "utf-8")@b.link&noparse=false&image=@java.net.URLEncoder.encode("http://www.umori.li/assets/images/big_smile72.png", "utf-8")"
+                target="_blank">vk</a></li>
            </ul>
       </div>
       } else {
