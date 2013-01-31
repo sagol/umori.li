@@ -1,11 +1,11 @@
-@(title: Html, nav: String = "")(content: Html)
+@(title: Html, nav: String = "")(headInsert: Html = Html.empty)(content: Html)
 
 <!DOCTYPE html>
 
 <html>
     <head>
         <title>Umori.li</title>
-
+        @headInsert
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/docs.css")">

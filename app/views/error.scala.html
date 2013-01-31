@@ -1,4 +1,4 @@
 @(title: String, body: String)
-@main(Html(text = title), title) {
+@main(Html(text = title), title)(Html("<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />")) {
     @Html(body)
 }

@@ -2,7 +2,7 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import collection.mutable
+import org.apache.commons.lang3.StringEscapeUtils
 
 object Application extends Controller {
 
@@ -27,7 +27,14 @@ object Application extends Controller {
   }
 
   def url(url: Option[String])= Action {
-    Ok(views.html.bash("...", SourceInstances.urlContent(url.getOrElse(""))))
+    val content = SourceInstances.urlContent(url.getOrElse(""))
+    val meta = "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />\n\t\t" +
+               "<meta name=\"title\" content=\"" +
+                  StringEscapeUtils.escapeHtml4(content.head.element.text().take(15)) + "\" />\n\t\t" +
+               "<meta name=\"description\" content=\"" +
+                  StringEscapeUtils.escapeHtml4(content.head.element.text().take(100)) + "\" />\n\t\t" +
+               "<link rel=\"image_src\" href=\"http://www.umori.li/assets/images/big_smile72.png\" />"
+    Ok(views.html.url("...", content)(meta))
   }
 
   def ithappens = Action {
