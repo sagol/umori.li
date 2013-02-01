@@ -32,10 +32,14 @@ class UmorElement(val site: Site) {
   private var _element:Element = _
   def element = _element
   private var _elementHtml:String = _
+  private var _elementText:String = _
   def elementHtml = _elementHtml
+  def elementText = _elementText
   def element_=(element: Element) {
     _element = element
     _elementHtml = Jsoup.clean(StringEscapeUtils.unescapeHtml4(_element.toString), whitelist)
+    _elementText = Jsoup.clean(_elementHtml, Whitelist.simpleText())
+
   }
 
 }

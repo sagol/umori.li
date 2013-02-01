@@ -34,7 +34,7 @@ object Application extends Controller {
         "<meta name=\"title\" content=\"" +
         StringEscapeUtils.escapeHtml4(content.head.element.text().take(30)) + "...\" />\n\t\t" +
         "<meta name=\"description\" content=\"" +
-        StringEscapeUtils.escapeHtml4(content.head.element.text().take(120)) + "\" />\n\t\t" +
+        StringEscapeUtils.escapeHtml4(content.head.elementText.take(120)) + "\" />\n\t\t" +
         "<link rel=\"image_src\" href=\"http://www.umori.li/assets/images/big_smile72.png\" />\n\t\t" +
         "<meta property=\"og:title\" content=\"" +
         StringEscapeUtils.escapeHtml4(content.head.element.text().take(30)) + "...\" />\n\t\t" +
