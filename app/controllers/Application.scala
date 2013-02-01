@@ -32,14 +32,14 @@ object Application extends Controller {
     if (content.size > 0) {
       meta = "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />\n\t\t" +
         "<meta name=\"title\" content=\"" +
-        StringEscapeUtils.escapeHtml4(content.head.element.text().take(30)) + "...\" />\n\t\t" +
+        content.head.elementText.take(30) + "...\" />\n\t\t" +
         "<meta name=\"description\" content=\"" +
-        StringEscapeUtils.escapeHtml4(content.head.elementText.take(120)) + "\" />\n\t\t" +
+        content.head.elementText.take(120) + "\" />\n\t\t" +
         "<link rel=\"image_src\" href=\"http://www.umori.li/assets/images/big_smile72.png\" />\n\t\t" +
         "<meta property=\"og:title\" content=\"" +
-        StringEscapeUtils.escapeHtml4(content.head.element.text().take(30)) + "...\" />\n\t\t" +
+        content.head.elementText.take(30) + "...\" />\n\t\t" +
         "<meta property=\"og:description\" content=\"" +
-        StringEscapeUtils.escapeHtml4(content.head.element.text().take(120)) + "\" />\n\t\t" +
+        content.head.elementText.take(120) + "\" />\n\t\t" +
         "<meta property=\"og:image\" href=\"http://www.umori.li/assets/images/big_smile72.png\" />\n\t\t" +
         //               "<meta name=\"twitter:title\" content=\"" +
         //                StringEscapeUtils.escapeHtml4(content.head.element.text().take(65)) + "...\" />\n\t\t" +

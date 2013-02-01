@@ -38,7 +38,7 @@ class UmorElement(val site: Site) {
   def element_=(element: Element) {
     _element = element
     _elementHtml = Jsoup.clean(StringEscapeUtils.unescapeHtml4(_element.toString), whitelist)
-    _elementText = Jsoup.clean(_elementHtml, Whitelist.simpleText())
+    _elementText = Jsoup.clean(_element.text(), Whitelist.none())
 
   }
 
