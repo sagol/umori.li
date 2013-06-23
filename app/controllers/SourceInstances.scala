@@ -107,7 +107,7 @@ object SourceInstances {
           for (y <- 0 to ysz) {
             if (!instances(i).instance(y).site.name.contains("abyss") &&
                 !instances(i).instance(y).site.name.contains("zadolba"))
-              len += instances(i).instance(y).content.size
+              len += instances(i).instance(y).content.size / 3
           }
         }
       }
