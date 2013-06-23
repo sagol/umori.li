@@ -105,7 +105,8 @@ object SourceInstances {
         if (instances(i).instance != null) {
           val ysz = instances(i).instance.size - 1
           for (y <- 0 to ysz) {
-            if (!instances(i).instance(y).site.name.contains("abyss"))
+            if (!instances(i).instance(y).site.name.contains("abyss") &&
+                !instances(i).instance(y).site.name.contains("zadolba"))
               len += instances(i).instance(y).content.size
           }
         }
@@ -117,7 +118,8 @@ object SourceInstances {
       try {
         if (instances(j).instance.size > 0) {
           var k = rnd.nextInt(instances(j).instance.size)
-          while (instances(j).instance(k).site.name.contains("abyss"))
+          while (instances(j).instance(k).site.name.contains("abyss") &&
+            !instances(j).instance(k).site.name.contains("zadolba"))
             k = rnd.nextInt(instances(j).instance.size)
           val l = instances(j).instance(k).content.size - 1
           if (l > 1)
