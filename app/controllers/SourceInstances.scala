@@ -36,13 +36,19 @@ object SourceInstances {
   }
   var instanceInitMap = init()
 
-  def urlContent(url: String): mutable.LinkedHashSet[UmorElement] = {
+  def findInstance(url: String, i: Int): SourceInstance ={
+    if (i >= instances.length) null
+    else if (url.contains(instances(i).sites.head.site)) instances(i)
+    else findInstance(url, i + 1)
+  }
 
-    def findInstanse(url: String, i: Int): SourceInstance ={
-      if (i >= instances.length) null
-      else if (url.contains(instances(i).sites.head.site)) instances(i)
-        else findInstanse(url, i + 1)
-    }
+  def findInstanceByName(name: String, i: Int): SourceInstance ={
+    if (i >= instances.length) null
+    else if (instances(i).sites.head.site.contains(name)) instances(i)
+    else findInstanceByName(name, i + 1)
+  }
+
+  def urlContent(url: String): mutable.LinkedHashSet[UmorElement] = {
 
     def findSite(url: String, sites: List[Site], i: Int): Site ={
       if (i >= sites.length) null
@@ -64,8 +70,8 @@ object SourceInstances {
       }
     }
 
-    val instance = findInstanse(url, 0)
-    val site = if (url != null && instance != null) findSite(url, instance.sites,0) else null
+    val instance = findInstance(url, 0)
+    val site = if (url != null && instance != null) findSite(url, instance.sites, 0) else null
 
     def content:mutable.LinkedHashSet[UmorElement] = {
       val document = getDocument(url)
@@ -82,8 +88,8 @@ object SourceInstances {
         val i = elemsin.iterator()
         var elemsout:mutable.LinkedHashSet[UmorElement] = mutable.LinkedHashSet()
         while(i.hasNext) {
-          val u = new UmorElement(site)
-          u.link_= (url)
+          val u = new UmorElement(site, "", "")
+          u.setLink(url)
           u.element_= (i.next())
           elemsout += u
         }
@@ -98,33 +104,31 @@ object SourceInstances {
   private def randomMix(num: Int = 0): mutable.LinkedHashSet[UmorElement] = {
     var tpl = List[(Int, Int, Int)]()
     val rnd = new Random()
-    var len = num
+    var len = 0
 
-    if (len == 0) {
-      for (i <- 0 to 4) {
-        if (instances(i).instance != null) {
-          val ysz = instances(i).instance.size - 1
-          for (y <- 0 to ysz) {
-            if (!instances(i).instance(y).site.name.contains("abyss") &&
-                !instances(i).instance(y).site.name.contains("zadolbali"))
-              len += instances(i).instance(y).content.size / 3
-          }
+    for (i <- 0 to 4) {
+      if (instances(i).instance != null && i != 2) {       // исключаем Задолба.ли
+        val ysz = instances(i).instance.size - 1
+        for (y <- 0 to ysz) {
+          if (!instances(i).instance(y).site.name.contains("abyss"))
+            len += instances(i).instance(y).content.size
         }
       }
     }
 
+    if (num < len && num > 0) len = num
+
     for (i <- 0 to len) {
-      val j = rnd.nextInt(5)
+      var j = rnd.nextInt(5)
+      while (instances(j).instance.size == 0 || j == 2)
+        j = rnd.nextInt(5)
       try {
-        if (instances(j).instance.size > 0) {
           var k = rnd.nextInt(instances(j).instance.size)
-          while (instances(j).instance(k).site.name.contains("abyss") &&
-            !instances(j).instance(k).site.name.contains("zadolbali"))
+          while (instances(j).instance(k).site.name.contains("abyss"))
             k = rnd.nextInt(instances(j).instance.size)
           val l = instances(j).instance(k).content.size - 1
           if (l > 1)
             tpl ::= (j, k, rnd.nextInt(l) + 1)
-        }
       } catch {
         case e:IllegalArgumentException =>
       }

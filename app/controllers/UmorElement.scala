@@ -11,35 +11,70 @@ import org.jsoup.nodes.Element
 import org.jsoup.Jsoup
 import org.apache.commons.lang3.StringEscapeUtils
 import org.jsoup.safety.Whitelist
+import play.api.libs.json
 
-class UmorElement(val site: Site) {
+case class UmorElement(site: Site, var link: String, var elementPureHtml: String) {
 
-  val whitelist = Whitelist.simpleText().addTags("br").addTags("div", "p").
-    addAttributes("div", "class").addAttributes("p", "class").addAttributes("div", "site")
+  private var _link:String = null
+//  link = _link
 
-  private var _link:String = _
-  def link = _link
-  def link_=(link: String) {
+/*  def link_=(link: String) {
     if (link != "") {
       if (link.contains(site.site + site.linkpar))
         _link = controllers.routes.Application.url(Option(link)).toString()
       else
         _link = controllers.routes.Application.url(Option("http://" + site.site + site.linkpar + link)).toString()
     }
-    else _link = null
+    else this.link = null
+  }
+  */
+  def getLink : String = _link
+  def setLink (link: String) {
+    if (link != "") {
+      if (link.contains(site.site + site.linkpar))
+        _link = controllers.routes.Application.url(Option(link)).toString()
+      else
+        _link = controllers.routes.Application.url(Option("http://" + site.site + site.linkpar + link)).toString()
+      this.link = _link
+    }
+    else this.link = null
   }
 
   private var _element:Element = _
   def element = _element
   private var _elementHtml:String = _
+  private var _elementPureHtml:String = _
   private var _elementText:String = _
-  def elementHtml = _elementHtml
+  var elementHtml = _elementHtml
   def elementText = _elementText
   def element_=(element: Element) {
     _element = element
-    _elementHtml = Jsoup.clean(StringEscapeUtils.unescapeHtml4(_element.toString), whitelist)
+    _elementHtml = Jsoup.clean(StringEscapeUtils.unescapeHtml4(_element.toString), Whitelist.simpleText().addTags("br").addTags("div", "p").
+      addAttributes("div", "class").addAttributes("p", "class").addAttributes("div", "site"))
+    _elementPureHtml = Jsoup.clean(StringEscapeUtils.unescapeHtml4(_element.toString), Whitelist.basic())
     _elementText = Jsoup.clean(_element.text(), Whitelist.none())
-
+    this.elementHtml = _elementHtml
+    this.elementPureHtml = _elementPureHtml
   }
 
+}
+
+import play.api.libs.json._
+
+object UmorElement {
+
+  implicit object UmorElementFormat extends Format[UmorElement] {
+
+    def reads(json: JsValue) = JsSuccess(UmorElement(
+      (json \ "Site").as[Site],
+      (json \ "link").as[String],
+      (json \ "elementPureHtml").as[String]
+    ))
+
+    def writes(json: UmorElement) = JsObject(Seq(
+      "site" -> JsString(json.site.site),
+      "link" -> JsString(json.link),
+      "elementPureHtml" -> JsString(json.elementPureHtml)
+    ))
+  }
 }

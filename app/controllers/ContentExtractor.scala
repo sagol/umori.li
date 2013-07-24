@@ -16,7 +16,7 @@ class ContentExtractor (val site: Site) {
 
   private def getDocument (url: String) = {
     try {
-      if (isRSSlink){ //временно закомментил, пока ссылки не нужны
+      if (isRSSlink){
         val uri = new URL(url)
         val stream = uri.openStream()
         val rssParser = Jsoup.parse(stream, site.encoding, url, Parser.xmlParser())
@@ -69,9 +69,9 @@ class ContentExtractor (val site: Site) {
       var elemsout:Uelements = mutable.LinkedHashSet()
       while(i.hasNext) {
         val e = i.next()
-        val u = new UmorElement(site)
-        if (links != null) u.link_= (e.select(links).text())
-        else u.link_=(e.id().replaceAll("\\D+","")) //оставляем только цифры
+        val u = new UmorElement(site, "", "")
+        if (links != null) u.setLink(e.select(links).text())
+        else u.setLink(e.id().replaceAll("\\D+","")) //оставляем только цифры
         u.element_= (e.select(names).get(0))
         elemsout += u
       }

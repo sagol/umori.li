@@ -2,7 +2,8 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import org.apache.commons.lang3.StringEscapeUtils
+import play.api.libs.json._
+//import com.codahale.jerkson.Json._
 
 object Application extends Controller {
 
@@ -17,7 +18,7 @@ object Application extends Controller {
 
   def index = Action {
     if (updateAll()) {
-      Ok(views.html.bash("Микс", SourceInstances.random))
+      Ok(views.html.bash("Микс", SourceInstances.random.slice(0, 50)))
     }
     else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
   }
@@ -26,6 +27,42 @@ object Application extends Controller {
     Ok(views.html.agree("Пользовательское соглашение"))
   }
 
+
+  def rest(site: Option[String], name: Option[String])= Action {
+    if (updateAll()) {
+      val instance = SourceInstances.findInstanceByName(site.getOrElse("bash"), 0)
+      if (instance != null) {
+        val content = instance.contentByName(name.getOrElse("bash"))
+        if (content != null && content.size > 0) {
+          Ok(Json.toJson(
+            Map(
+              site.getOrElse("bash") ->  Json.toJson(
+                Map(
+                  "site" -> Json.toJson(content.head.site.site),
+                  "name" -> Json.toJson(content.head.site.name),
+                  "url" -> Json.toJson(content.head.site.url),
+                  "parsel" -> Json.toJson(content.head.site.parsel),
+                  "encoding" -> Json.toJson(content.head.site.encoding)
+                )
+              ),
+              "jokes" -> Json.toJson(content.toList)
+            )
+          )).as("application/json")
+        }
+        else Ok(Json.toJson("Can't find source")).as("application/json")
+      }
+      else Ok(Json.toJson("Can't find source")).as("application/json")
+    }
+    else Ok(Json.toJson("Error")).as("application/json")
+  }
+
+  def sources = Action {
+    Ok(Json.toJson(SiteReader.siteMap)).as("application/json")
+  }
+
+  def random(num: Option[Int]) = Action {
+    Ok(Json.toJson(SourceInstances.random.slice(0, num.getOrElse(50)))).as("application/json")
+  }
   def url(url: Option[String])= Action {
     val content = SourceInstances.urlContent(url.getOrElse(""))
     var meta:String = ""

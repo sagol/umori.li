@@ -5,7 +5,6 @@ import org.jsoup.safety.Whitelist
 import org.apache.commons.lang3.StringEscapeUtils
 import collection.mutable
 
-
 /**
  * User: sagol
  * Date: 26.12.12

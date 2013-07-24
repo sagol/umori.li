@@ -1,23 +1,50 @@
 package controllers
 
+import play.api.libs.json._
+import play.api.libs.json.JsObject
+import play.api.libs.json.JsString
+
 /**
  * User: sagol
  * Date: 27.12.12
  * Time: 22:08
  * xxxx
  */
-class Site(
-    val site: String,
-    val name: String,
-    val url: String,
-    val parsel: String,
-    val encoding: String,
-    val linkpar: String) {
+case class Site(
+    site: String,
+    name: String,
+    url: String,
+    parsel: String,
+    encoding: String,
+    linkpar: String) {
 
   override def toString: String =
     "Site: " + site + "\n" + "Name: " + name + " " +
       "Url: " + url + " [" + parsel + "]" + " - " + encoding
 
+}
+
+object Site {
+  implicit object SiteFormat extends Format[Site] {
+
+    def reads(json: JsValue) = JsSuccess(Site(
+      (json \ "site").as[String],
+      (json \ "name").as[String],
+      (json \ "url").as[String],
+      (json \ "parsel").as[String],
+      (json \ "encoding").as[String],
+      (json \ "linkpar").as[String]
+   ))
+
+    def writes(json: Site) = JsObject(Seq(
+      "site" -> JsString(json.site),
+      "name" -> JsString(json.name),
+      "url" -> JsString(json.url),
+      "parsel" -> JsString(json.parsel),
+      "encoding" -> JsString(json.encoding),
+      "linkpar" -> JsString(json.linkpar)
+    ))
+  }
 }
 
 abstract class SiteSet {
