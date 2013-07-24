@@ -47,21 +47,21 @@ object Application extends Controller {
               ),
               "jokes" -> Json.toJson(content.toList)
             )
-          )).as("application/json")
+          )).as("application/json; charset=utf-8")
         }
-        else Ok(Json.toJson("Can't find source")).as("application/json")
+        else Ok(Json.toJson("Can't find source")).as("application/json; charset=utf-8")
       }
-      else Ok(Json.toJson("Can't find source")).as("application/json")
+      else Ok(Json.toJson("Can't find source")).as("application/json; charset=utf-8")
     }
-    else Ok(Json.toJson("Error")).as("application/json")
+    else Ok(Json.toJson("Error")).as("application/json; charset=utf-8")
   }
 
   def sources = Action {
-    Ok(Json.toJson(SiteReader.siteMap)).as("application/json")
+    Ok(Json.toJson(SiteReader.siteMap)).as("application/json; charset=utf-8")
   }
 
   def random(num: Option[Int]) = Action {
-    Ok(Json.toJson(SourceInstances.random.slice(0, num.getOrElse(50)))).as("application/json")
+    Ok(Json.toJson(SourceInstances.random.slice(0, num.getOrElse(50)))).as("application/json; charset=utf-8")
   }
   def url(url: Option[String])= Action {
     val content = SourceInstances.urlContent(url.getOrElse(""))
