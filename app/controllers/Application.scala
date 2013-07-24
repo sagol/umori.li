@@ -27,6 +27,9 @@ object Application extends Controller {
     Ok(views.html.agree("Пользовательское соглашение"))
   }
 
+  def api = Action {
+    Ok(views.html.api("REST API"))
+  }
 
   def rest(site: Option[String], name: Option[String])= Action {
     if (updateAll()) {
