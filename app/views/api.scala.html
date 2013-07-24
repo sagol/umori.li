@@ -1,0 +1,211 @@
+@(title: String)
+@main(Html(text = title), title)(Html("<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />")) {
+<div class="container">
+   <div class="row">
+       <div class="span14">
+           <div class="well">
+              <p><b>Umori.li</b> предоставляет возможность внешним разработчикам программными средствами получать данные. Одним из способов такого взаимодействия является использование REST API,
+                 которое определяет набор функций, позволяющих совершать запросы и получать ответы. Взаимодействие происходит по протоколу HTTP.</p>
+              <p>Все вызовы методов API — это GET HTTP-запросы к URL http://www.umori.li/api с некоторым набором параметров.В ответ на запрос вы получаете его результат в формате JSON. Кодировка результата — UTF-8.</p>
+              <p>При использовании метода GET, данные запроса передаются в виде query-строки (после знака ?). Помните, что в случае GET-запроса, параметры должны быть закодированы с помощью URL encoding.</p>
+           </div>
+           <div class="tabbable tabs-left">
+               <ul class="nav nav-tabs">
+                   <li class=""><a href="#lsources" data-toggle="tab">sources</a></li>
+                   <li class="active"><a href="#lget" data-toggle="tab">get</a></li>
+                   <li class=""><a href="#lrandom" data-toggle="tab">random</a></li>
+               </ul>
+               <div class="tab-content">
+                   <div class="tab-pane" id="lsources">
+                       <h4>Получение источников данных</h4>
+                       <p>Для того чтобы получить перечень возможных источников данных с которых осуществляется сбор
+                          шуток, афоризмов, анекдотов и историй необходимо воспользоваться функцией <code>sources</code></p>
+                       <b>Параметры</b>
+                       <p>Не заданы</p>
+                       <hr>
+                       <b>Результат</b>
+                       <p>Формат ответа для json-выдачи:</p>
+                       <pre>
+   {
+      SOURCE_NAME: [
+        {
+           "site": SITE,
+           "name": NAME,
+           "url": URL,
+           "parsel": PARSE_TAG,
+           "encoding": ENCODING,
+           "linkpar": PATH
+        }
+      ]
+   }
+                       </pre>
+                       <dl class="dl-horizontal">
+                           <dt>SOURCE_NAME</dt>
+                           <dd>Имя источника данных</dd>
+                           <dt>SITE</dt>
+                           <dd>Уникальное название источника данных (сайта в целом)- используется как параметр для <code>get</code></dd>
+                           <dt>NAME</dt>
+                           <dd>Уникальное название источника данных (области информации на сайте)- используется как параметр для <code>get</code></dd>
+                           <dt>URL</dt>
+                           <dd>HTTP-ссылка на источник данных </dd>
+                           <dt>PARSE_TAG</dt>
+                           <dd>Тэг по которому определяются данные для парсинга. Параметр необходим только для самостоятельного разбора данных из источника </dd>
+                           <dt>ENCODING</dt>
+                           <dd>Кодировка данных на стороне источника. Параметр необходим только для самостоятельного разбора данных из источника </dd>
+                           <dt>PATH</dt>
+                           <dd>Часть HTTP-ссылки в полном пути к данным для парсинга. Параметр необходим только для самостоятельного разбора данных из источника </dd>
+                       </dl>
+                       <div class="bs-docs-example">
+                           <pre>
+   {
+      "zadolba.li": [
+        {
+           "site": "zadolba.li",
+           "name": "zadolbali",
+           "url": "http://zadolba.li",
+           "parsel": ".the",
+           "encoding": "windows-1251",
+           "linkpar": "/story/"
+        }
+      ]
+   }
+                           </pre>
+                       </div>
+                       <hr>
+                       <b>Пример использования функции</b>
+                       <div class="bs-docs-example">
+                           <pre>
+   http://www.umori.li/api/sources
+                           </pre>
+                       </div>
+
+                   </div>
+                   <div class="tab-pane active" id="lget">
+                       <h4>Получение данных</h4>
+                       <p>Для получения данных из конкретного источника необходимо воспользоваться функцией <code>get</code></p>
+                       <b>Параметры</b>
+                       <dl class="dl-horizontal">
+                           <dt>site</dt>
+                           <dd>Уникальное название источника данных (сайта в целом)
+                           <dt>name</dt>
+                           <dd>Уникальное название источника данных (области информации на сайте)
+                       </dl>
+                       <hr>
+                       <b>Результат</b>
+                       <p>Формат ответа для json-выдачи:</p>
+                       <pre>
+   {
+      SOURSE_NAME: {
+         "name": NAME,
+         "url": URL,
+         "site": SITE,
+         "parsel": PARSE_TAG,
+         "encoding": ENCODING
+      },
+      "jokes": [
+         {
+            "site": SITE,
+            "link": LINK,
+            "elementPureHtml": HTML_TEXT
+         }
+      ]
+   }
+                       </pre>
+                       <dl class="dl-horizontal">
+                           <dt>SOURCE_NAME</dt>
+                           <dd>Имя источника данных</dd>
+                           <dt>NAME</dt>
+                           <dd>Уникальное название источника данных (области информации на сайте)- используется как параметр для <code>get</code></dd>
+                           <dt>URL</dt>
+                           <dd>HTTP-ссылка на источник данных </dd>
+                           <dt>SITE</dt>
+                           <dd>Уникальное название источника данных (сайта в целом)- используется как параметр для <code>get</code></dd>
+                           <dt>PARSE_TAG</dt>
+                           <dd>Тэг по которому определяются данные для парсинга. Параметр необходим только для самостоятельного разбора данных из источника </dd>
+                           <dt>ENCODING</dt>
+                           <dd>Кодировка данных на стороне источника. Параметр необходим только для самостоятельного разбора данных из источника </dd>
+                           <dt>LINK</dt>
+                           <dd>Часть HTTP-ссылки, добавляя которую к http://www.umori.li, можно получить прямую http-ссылку к данным </dd>
+                           <dt>HTML_TEXT</dt>
+                           <dd>Данные в текстовом формате с частью тегов для форматирования</dd>
+                       </dl>
+                       <div class="bs-docs-example">
+                           <pre>
+   {
+      "bash.im": {
+         "name": "bash",
+         "url": "http://bash.im",
+         "site": "bash.im",
+         "parsel": ".text",
+         "encoding": "windows-1251"
+      },
+      "jokes": [
+         {
+            "site": "bash.im",
+            "link": "/url.html?url=http%3A%2F%2Fbash.im%2Fquote%2F423640",
+            "elementPureHtml": "Объяснения сестрой ситуации на дороге.\n&lt;br/&gt;С: Едем значит мы...\n&lt;br/&gt;Я: Мы - это кто?\n&lt;br/&gt;С: Я, машина и ПДД - каждый сам по себе..."
+         }
+      ]
+   }
+                           </pre>
+                       </div>
+                       <hr>
+                       <b>Пример использования функции</b>
+                       <div class="bs-docs-example">
+                           <pre>
+   http://www.umori.li/api/get?site=bash.im&name=bash
+                           </pre>
+                       </div>
+                   </div>
+                   <div class="tab-pane" id="lrandom">
+                       <h4>Получение случайных данных</h4>
+                       <p>Для получения случайных данных из разных источника необходимо воспользоваться функцией <code>random</code></p>
+                       <b>Параметры</b>
+                       <dl class="dl-horizontal">
+                           <dt>num</dt>
+                           <dd>Количество данных. По-умолчанию <code>num=50</code></dd>
+                       </dl>
+                       <hr>
+                       <b>Результат</b>
+                       <p>Формат ответа для json-выдачи:</p>
+                       <pre>
+   [
+      {
+         "site": SITE,
+         "link": LINK,
+         "elementPureHtml": HTML_TEXT
+      }
+   ]
+                       </pre>
+                       <dl class="dl-horizontal">
+                           <dt>SITE</dt>
+                           <dd>Уникальное название источника данных (сайта в целом)- используется как параметр для <code>get</code></dd>
+                           <dt>LINK</dt>
+                           <dd>Часть HTTP-ссылки, добавляя которую к http://www.umori.li, можно получить прямую http-ссылку к данным </dd>
+                           <dt>HTML_TEXT</dt>
+                           <dd>Данные в текстовом формате с частью тегов для форматирования</dd>
+                       </dl>
+                       <div class="bs-docs-example">
+                           <pre>
+   [
+      {
+         "site": "shortiki.com",
+         "link": "/url.html?url=http%3A%2F%2Fshortiki.com%2Fshortik.php%3Fshortik%3D7058",
+         "elementPureHtml": "Во время игры сборной России по футболу, комментатор выронил на себя кружку горячего чая. Так точно еще никто не описывал игру сборной России."
+      }
+   ]
+                           </pre>
+                       </div>
+                       <hr>
+                       <b>Пример использования функции</b>
+                       <div class="bs-docs-example">
+                           <pre>
+   http://www.umori.li/api/random?num=10
+                           </pre>
+                       </div>
+               </div>
+           </div> <!-- /tabbable -->      </div>
+   </div>
+</div>
+
+}
