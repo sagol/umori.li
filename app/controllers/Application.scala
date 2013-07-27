@@ -60,7 +60,7 @@ object Application extends Controller {
   }
 
   def sources = Action {
-    Ok(Json.toJson(SiteReader.siteMap)).as("application/json; charset=utf-8")
+    Ok(Json.toJson(SiteReader.sources)).as("application/json; charset=utf-8")
   }
 
   def random(num: Option[Int]) = Action {
