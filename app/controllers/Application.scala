@@ -31,32 +31,19 @@ object Application extends Controller {
     Ok(views.html.api("REST API"))
   }
 
-  def rest(site: Option[String], name: Option[String])= Action {
-    if (updateAll()) {
+  def get(site: Option[String], name: Option[String], num: Option[Int])= Action {
+//    if (updateAll()) {
       val instance = SourceInstances.findInstanceByName(site.getOrElse("bash"), 0)
       if (instance != null) {
         val content = instance.contentByName(name.getOrElse("bash"))
         if (content != null && content.size > 0) {
-          Ok(Json.toJson(
-            Map(
-              site.getOrElse("bash") ->  Json.toJson(
-                Map(
-                  "site" -> Json.toJson(content.head.site.site),
-                  "name" -> Json.toJson(content.head.site.name),
-                  "url" -> Json.toJson(content.head.site.url),
-                  "parsel" -> Json.toJson(content.head.site.parsel),
-                  "encoding" -> Json.toJson(content.head.site.encoding)
-                )
-              ),
-              "jokes" -> Json.toJson(content.toList)
-            )
-          )).as("application/json; charset=utf-8")
+          Ok(Json.toJson(content.slice(0, num.getOrElse(50)))).as("application/json; charset=utf-8")
         }
         else Ok(Json.toJson("Can't find source")).as("application/json; charset=utf-8")
       }
       else Ok(Json.toJson("Can't find source")).as("application/json; charset=utf-8")
-    }
-    else Ok(Json.toJson("Error")).as("application/json; charset=utf-8")
+//    }
+  //  else Ok(Json.toJson("Error updating info")).as("application/json; charset=utf-8")
   }
 
   def sources = Action {

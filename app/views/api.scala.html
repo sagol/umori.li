@@ -26,22 +26,20 @@
                        <b>Результат</b>
                        <p>Формат ответа для json-выдачи:</p>
                        <pre>
-   {
-      SOURCE_NAME: [
-        {
-           "site": SITE,
-           "name": NAME,
-           "url": URL,
-           "parsel": PARSE_TAG,
-           "encoding": ENCODING,
-           "linkpar": PATH
-        }
+   [
+      [
+         {
+            "site": SITE,
+            "name": NAME,
+            "url": URL,
+            "parsel": PARSE_TAG,
+            "encoding": ENCODING,
+            "linkpar": PATH
+         }
       ]
-   }
+   ]
                        </pre>
                        <dl class="dl-horizontal">
-                           <dt>SOURCE_NAME</dt>
-                           <dd>Имя источника данных</dd>
                            <dt>SITE</dt>
                            <dd>Уникальное название источника данных (сайта в целом)- используется как параметр для <code>get</code></dd>
                            <dt>NAME</dt>
@@ -57,18 +55,18 @@
                        </dl>
                        <div class="bs-docs-example">
                            <pre>
-   {
-      "zadolba.li": [
-        {
-           "site": "zadolba.li",
-           "name": "zadolbali",
-           "url": "http://zadolba.li",
-           "parsel": ".the",
-           "encoding": "windows-1251",
-           "linkpar": "/story/"
-        }
+   [
+      [
+         {
+            "site": "bash.im",
+            "name": "bash",
+            "url": "http://bash.im",
+            "parsel": ".text",
+            "encoding": "windows-1251",
+            "linkpar": "/quote/"
+         }
       ]
-   }
+   ]
                            </pre>
                        </div>
                        <hr>
@@ -89,41 +87,24 @@
                            <dd>Уникальное название источника данных (сайта в целом)
                            <dt>name</dt>
                            <dd>Уникальное название источника данных (области информации на сайте)
+                           <dt>num</dt>
+                           <dd>Количество данных. По-умолчанию <code>num=50</code></dd>
                        </dl>
                        <hr>
                        <b>Результат</b>
                        <p>Формат ответа для json-выдачи:</p>
                        <pre>
-   {
-      SOURSE_NAME: {
-         "name": NAME,
-         "url": URL,
+   [
+      {
          "site": SITE,
-         "parsel": PARSE_TAG,
-         "encoding": ENCODING
-      },
-      "jokes": [
-         {
-            "site": SITE,
-            "link": LINK,
-            "elementPureHtml": HTML_TEXT
-         }
-      ]
-   }
+         "link": LINK,
+         "elementPureHtml": HTML_TEXT
+      }
+   ]
                        </pre>
                        <dl class="dl-horizontal">
-                           <dt>SOURCE_NAME</dt>
-                           <dd>Имя источника данных</dd>
-                           <dt>NAME</dt>
-                           <dd>Уникальное название источника данных (области информации на сайте)- используется как параметр для <code>get</code></dd>
-                           <dt>URL</dt>
-                           <dd>HTTP-ссылка на источник данных </dd>
                            <dt>SITE</dt>
                            <dd>Уникальное название источника данных (сайта в целом)- используется как параметр для <code>get</code></dd>
-                           <dt>PARSE_TAG</dt>
-                           <dd>Тэг по которому определяются данные для парсинга. Параметр необходим только для самостоятельного разбора данных из источника </dd>
-                           <dt>ENCODING</dt>
-                           <dd>Кодировка данных на стороне источника. Параметр необходим только для самостоятельного разбора данных из источника </dd>
                            <dt>LINK</dt>
                            <dd>Часть HTTP-ссылки, добавляя которую к http://www.umori.li, можно получить прямую http-ссылку к данным </dd>
                            <dt>HTML_TEXT</dt>
@@ -131,29 +112,20 @@
                        </dl>
                        <div class="bs-docs-example">
                            <pre>
-   {
-      "bash.im": {
-         "name": "bash",
-         "url": "http://bash.im",
+   [
+      {
          "site": "bash.im",
-         "parsel": ".text",
-         "encoding": "windows-1251"
-      },
-      "jokes": [
-         {
-            "site": "bash.im",
-            "link": "/url.html?url=http%3A%2F%2Fbash.im%2Fquote%2F423640",
-            "elementPureHtml": "Объяснения сестрой ситуации на дороге.\n&lt;br/&gt;С: Едем значит мы...\n&lt;br/&gt;Я: Мы - это кто?\n&lt;br/&gt;С: Я, машина и ПДД - каждый сам по себе..."
-         }
-      ]
-   }
-                           </pre>
+         "link": "/url.html?url=http%3A%2F%2Fbash.im%2Fquote%2F423692",
+         "elementPureHtml": "Работаю в рекламе. Попросили клиента (ветеринарная клиника) прислать логотип фирмы. Прислали скан халата с логотипом..."
+      }
+   ]
+                       </pre>
                        </div>
                        <hr>
                        <b>Пример использования функции</b>
                        <div class="bs-docs-example">
                            <pre>
-   http://www.umori.li/api/get?site=bash.im&name=bash
+   http://www.umori.li/api/get?site=bash.im&name=bash&num=100
                            </pre>
                        </div>
                    </div>

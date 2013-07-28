@@ -11,8 +11,9 @@ GET     /shortiki.html              controllers.Application.shortiki
 GET     /anekdot.html               controllers.Application.anekdot(name: Option[String])
 GET     /agree.html                 controllers.Application.agree
 GET     /api.html                   controllers.Application.api
+GET     /api                        controllers.Application.api
 GET     /url.html                   controllers.Application.url(url: Option[String])
-GET     /api/get                    controllers.Application.rest(site: Option[String], name: Option[String])
+GET     /api/get                    controllers.Application.get(site: Option[String], name: Option[String], num: Option[Int])
 GET     /api/sources                controllers.Application.sources
 GET     /api/random                 controllers.Application.random(num: Option[Int])
 
