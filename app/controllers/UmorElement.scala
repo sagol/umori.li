@@ -73,6 +73,7 @@ object UmorElement {
 
     def writes(json: UmorElement) = JsObject(Seq(
       "site" -> JsString(json.site.site),
+      "name" -> JsString(json.site.name),
       "link" -> JsString(json.link),
       "elementPureHtml" -> JsString(json.elementPureHtml)
     ))
