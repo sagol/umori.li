@@ -13,9 +13,13 @@ import org.apache.commons.lang3.StringEscapeUtils
 import org.jsoup.safety.Whitelist
 import play.api.libs.json
 
-case class UmorElement(site: Site, var link: String, var elementPureHtml: String) {
+case class UmorElement(site: Site) {
 
   private var _link:String = null
+
+  var elementPureHtml: String = _
+  var link: String = _
+
 //  link = _link
 
 /*  def link_=(link: String) {
@@ -66,14 +70,13 @@ object UmorElement {
   implicit object UmorElementFormat extends Format[UmorElement] {
 
     def reads(json: JsValue) = JsSuccess(UmorElement(
-      (json \ "Site").as[Site],
-      (json \ "link").as[String],
-      (json \ "elementPureHtml").as[String]
+      (json \ "Site").as[Site]
     ))
 
     def writes(json: UmorElement) = JsObject(Seq(
       "site" -> JsString(json.site.site),
       "name" -> JsString(json.site.name),
+      "desc" -> JsString(json.site.desc),
       "link" -> JsString(json.link),
       "elementPureHtml" -> JsString(json.elementPureHtml)
     ))

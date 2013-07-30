@@ -16,10 +16,11 @@ case class Site(
     url: String,
     parsel: String,
     encoding: String,
-    linkpar: String) {
+    linkpar: String,
+    desc: String) {
 
   override def toString: String =
-    "Site: " + site + "\n" + "Name: " + name + " " +
+    "Site: " + site + "\n" + "Name: " + name + " " + "Description: " + desc + " " +
       "Url: " + url + " [" + parsel + "]" + " - " + encoding
 
 }
@@ -33,7 +34,8 @@ object Site {
       (json \ "url").as[String],
       (json \ "parsel").as[String],
       (json \ "encoding").as[String],
-      (json \ "linkpar").as[String]
+      (json \ "linkpar").as[String],
+      (json \ "desc").as[String]
    ))
 
     def writes(json: Site) = JsObject(Seq(
@@ -42,7 +44,8 @@ object Site {
       "url" -> JsString(json.url),
       "parsel" -> JsString(json.parsel),
       "encoding" -> JsString(json.encoding),
-      "linkpar" -> JsString(json.linkpar)
+      "linkpar" -> JsString(json.linkpar),
+      "desc" -> JsString(json.desc)
     ))
   }
 }
