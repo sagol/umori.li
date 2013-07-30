@@ -13,25 +13,21 @@ import org.apache.commons.lang3.StringEscapeUtils
 import org.jsoup.safety.Whitelist
 import play.api.libs.json
 
-case class UmorElement(site: Site) {
+case class UmorElement(site: Site, var link: String, var elementPureHtml: String) {
 
   private var _link:String = null
+  //  link = _link
 
-  var elementPureHtml: String = _
-  var link: String = _
-
-//  link = _link
-
-/*  def link_=(link: String) {
-    if (link != "") {
-      if (link.contains(site.site + site.linkpar))
-        _link = controllers.routes.Application.url(Option(link)).toString()
-      else
-        _link = controllers.routes.Application.url(Option("http://" + site.site + site.linkpar + link)).toString()
+  /*  def link_=(link: String) {
+      if (link != "") {
+        if (link.contains(site.site + site.linkpar))
+          _link = controllers.routes.Application.url(Option(link)).toString()
+        else
+          _link = controllers.routes.Application.url(Option("http://" + site.site + site.linkpar + link)).toString()
+      }
+      else this.link = null
     }
-    else this.link = null
-  }
-  */
+    */
   def getLink : String = _link
   def setLink (link: String) {
     if (link != "") {
@@ -62,7 +58,6 @@ case class UmorElement(site: Site) {
   }
 
 }
-
 import play.api.libs.json._
 
 object UmorElement {
@@ -70,7 +65,9 @@ object UmorElement {
   implicit object UmorElementFormat extends Format[UmorElement] {
 
     def reads(json: JsValue) = JsSuccess(UmorElement(
-      (json \ "Site").as[Site]
+      (json \ "Site").as[Site],
+      (json \ "link").as[String],
+      (json \ "elementPureHtml").as[String]
     ))
 
     def writes(json: UmorElement) = JsObject(Seq(

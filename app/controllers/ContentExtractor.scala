@@ -69,7 +69,7 @@ class ContentExtractor (val site: Site) {
       var elemsout:Uelements = mutable.LinkedHashSet()
       while(i.hasNext) {
         val e = i.next()
-        val u = new UmorElement(site)
+        val u = new UmorElement(site, "", "")
         if (links != null) u.setLink(e.select(links).text())
         else u.setLink(e.id().replaceAll("\\D+","")) //оставляем только цифры
         u.element_= (e.select(names).get(0))

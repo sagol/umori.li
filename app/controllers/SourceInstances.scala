@@ -88,7 +88,7 @@ object SourceInstances {
         val i = elemsin.iterator()
         var elemsout:mutable.LinkedHashSet[UmorElement] = mutable.LinkedHashSet()
         while(i.hasNext) {
-          val u = new UmorElement(site)
+          val u = new UmorElement(site, "", "")
           u.setLink(url)
           u.element_= (i.next())
           elemsout += u
