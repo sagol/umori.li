@@ -12,8 +12,8 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src=\"@routes.Assets.at("javascripts/jquery-1.10.2.min.js")\" <\/script>')</script>
-
         </head>
+
     <body>
 
         <div class="navbar navbar-fixed-top">
@@ -59,7 +59,15 @@
         </div>
         <header class="jumbotron subhead" id="overview">
             <div class="container">
-                <h3><img src="@routes.Assets.at("images/big_smile72.png")" alt="Smile )">@title</h3>
+                <div class="row-fluid">
+                    <div id="div1" class="span10">
+                        <h3><img src="@routes.Assets.at("images/big_smile72.png")" alt="Smile )">@title</h3>
+                    </div>
+                    <div id="div2" class="span2">
+                        <a href="https://play.google.com/store/apps/details?id=com.sagol.umorili&hl=ru" target="_blank">
+                            <img src="http://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.sagol.umorili%26hl%3Dru&size=90x90" align="right" width="90" height="90" border="0" title="QR код"></a>
+                    </div>
+                </div>
             </div>
         </header>
 

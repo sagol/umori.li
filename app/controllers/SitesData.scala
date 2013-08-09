@@ -9,13 +9,13 @@ package controllers
  */
 object SitesData {
   //<a href="/quote/420939/bayan" class="old" id="vb420939"> "/quote/420939"
+  //<p class="text" id="story_10495">  "/story/10495"
   val bashim = """[
     { "site": "bash.im", "name": "bash", "url": "http://bash.im", "parsel": ".text",
      "encoding": "windows-1251", "linkpar": "/quote/", "desc": "Цитатник Рунета"},
-    { "site": "bash.im", "name": "abyss", "url": "http://bash.im/abyss", "parsel": ".text",
-     "encoding": "windows-1251", "linkpar": "none", "desc": "Цитатник Рунета - Бездна"}
+     { "site": "bash.im", "name": "abyss", "url": "http://bash.im/abyss", "parsel": ".text",
+       "encoding": "windows-1251", "linkpar": "none", "desc": "Цитатник Рунета - Бездна"}
   ]"""
-  //<p class="text" id="story_10495">  "/story/10495"
   val ithappens = """[
     { "site": "ithappens.ru", "name": "ithappens", "url": "http://ithappens.ru", "parsel": "p[id]",
      "encoding": "windows-1251", "linkpar": "/story/", "desc": "IT Happens"}
@@ -41,4 +41,8 @@ object SitesData {
     { "site": "anekdot.ru", "name": "new stihi", "url": "http://www.anekdot.ru/last/c.html", "parsel": ".text[id]",
      "encoding": "windows-1251", "linkpar": "/id/", "desc": "Стишки"}
   ]"""
+  val bashorg = """[
+    { "site": "bash.org", "name": "bashorg", "url": "http://bash.org/?latest", "parsel": ".qt",
+     "encoding": "windows-1251", "linkpar": "none", "desc": "Quote Database"}
+    ]"""
 }
