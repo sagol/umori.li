@@ -59,22 +59,24 @@ object SiteReader {
     buf.toString
   }
 
-  val sites = List("bash.im", "ithappens.ru", "zadolba.li", "shortiki.com", "anekdot.ru")
+  val sites = List("bash.im", "ithappens.ru", "zadolba.li", "shortiki.com", "anekdot.ru", "bash.org")
 
   val bashimJokes = SiteReader.ParseSites.getSiteData("bash.im", SitesData.bashim)
   val ithappensJokes = SiteReader.ParseSites.getSiteData("ithappens.ru", SitesData.ithappens)
   val zadolbaliJokes = SiteReader.ParseSites.getSiteData("zadolba.li", SitesData.zadolbali)
   val shortikiJokes = SiteReader.ParseSites.getSiteData("shortiki.com", SitesData.shortiki)
   val anekdotJokes = SiteReader.ParseSites.getSiteData("anekdot.ru", SitesData.anekdot)
+  val bashorgJokes = SiteReader.ParseSites.getSiteData("bash.org", SitesData.bashorg)
 
-  val sources = List(bashimJokes, ithappensJokes, zadolbaliJokes, shortikiJokes, anekdotJokes)
+  val sources = List(bashimJokes, ithappensJokes, zadolbaliJokes, shortikiJokes, anekdotJokes, bashorgJokes)
 
   val siteMap: Map[String, List[Site]] =
     Map() ++ Seq((sites(0) -> bashimJokes),
       (sites(1) -> ithappensJokes),
       (sites(2) -> zadolbaliJokes),
       (sites(3) -> shortikiJokes),
-      (sites(4) -> anekdotJokes))
+      (sites(4) -> anekdotJokes),
+      (sites(5) -> bashorgJokes))
 
   val siteSets: List[SiteSet] = sources.map(sites => toSiteSet(sites))
 
