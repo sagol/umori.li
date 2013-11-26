@@ -41,8 +41,9 @@ object SitesData {
     { "site": "anekdot.ru", "name": "new stihi", "url": "http://www.anekdot.ru/last/c.html", "parsel": ".text[id]",
      "encoding": "windows-1251", "linkpar": "/id/", "desc": "Стишки"}
   ]"""
-  val bashorg = """[
-    { "site": "bash.org", "name": "bashorg", "url": "http://bash.org/?latest", "parsel": ".qt",
-     "encoding": "windows-1251", "linkpar": "?", "desc": "Quote Database"}
+/*  val bashorg = """[
+    { "site": "german-bash.org", "name": "germanbash", "url": "http://german-bash.org/action/latest", "parsel": ".quote_zeile",
+     "encoding": "UTF-8", "linkpar": "/", "desc": "German Bash"}
     ]"""
+*/
 }

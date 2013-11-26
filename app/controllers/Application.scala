@@ -112,13 +112,14 @@ object Application extends Controller {
     }
     else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
   }
-
+/*
   def bashorg = Action {
     if (updateAll()) {
-      Ok(views.html.bash("bash.org", SourceInstances.instance_bashorg.contentByName("bashorg")))
+      Ok(views.html.bash("germanbash.org", SourceInstances.instance_bashorg.contentByName("germanbash")))
     }
     else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
   }
+  */
 
 }
 

@@ -24,10 +24,10 @@ object SourceInstances {
   val instance_zadolbali = new SourceInstance(SiteReader.zadolbaliJokes)
   val instance_shortiki = new SourceInstance(SiteReader.shortikiJokes)
   val instance_anekdot = new SourceInstance(SiteReader.anekdotJokes)
-  val instance_bashorg = new SourceInstance(SiteReader.bashorgJokes)
+//  val instance_bashorg = new SourceInstance(SiteReader.bashorgJokes)
 
   val instances = List (instance_bash, instance_ithappens, instance_zadolbali,
-    instance_shortiki, instance_anekdot, instance_bashorg)
+    instance_shortiki, instance_anekdot/*, instance_bashorg*/)
 
   var lastUpdateTime = System.currentTimeMillis()
 
