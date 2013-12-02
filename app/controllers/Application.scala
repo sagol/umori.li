@@ -1,9 +1,7 @@
 package controllers
 
-import play.api._
 import play.api.mvc._
 import play.api.libs.json._
-//import com.codahale.jerkson.Json._
 
 object Application extends Controller {
 
@@ -114,6 +112,14 @@ object Application extends Controller {
     }
     else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
   }
+/*
+  def bashorg = Action {
+    if (updateAll()) {
+      Ok(views.html.bash("germanbash.org", SourceInstances.instance_bashorg.contentByName("germanbash")))
+    }
+    else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
+  }
+  */
 
 }
 

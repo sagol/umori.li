@@ -32,8 +32,10 @@ class ContentExtractor (val site: Site) {
 
   private def getRSSlink = {
     val links = getDocument(site.url).select("link[type=application/rss+xml]")
-    if (links.size() > 0) {
-      val link = links.get(0).attr("href")
+    if (links.size() > 1) {
+      var link = links.get(0).attr("href")
+      if (links.size() > 1)
+        link = links.get(1).attr("href")   // временный костыль для теста немецкого баша
       if (link.contains(site.url)) link else null
     }
     else null
@@ -69,7 +71,7 @@ class ContentExtractor (val site: Site) {
       var elemsout:Uelements = mutable.LinkedHashSet()
       while(i.hasNext) {
         val e = i.next()
-        val u = new UmorElement(site, "", "")
+        val u = new UmorElement(site, isRSSlink, "", "")
         if (links != null) u.setLink(e.select(links).text())
         else u.setLink(e.id().replaceAll("\\D+","")) //оставляем только цифры
         u.element_= (e.select(names).get(0))

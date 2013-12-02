@@ -51,7 +51,11 @@
                                     <li><a href="@routes.Application.anekdot(Option("new aforizm"))">Афоризмы</a></li>
                                     <li><a href="@routes.Application.anekdot(Option("new stihi"))">Стихи</a></li>
                                 </ul>
-                            </li>
+<!--                          </li>
+                            <li class="@("active".when(nav == "german-bash.org"))">
+                                <a href="@routes.Application.bash(Option("bash"))">german-bash.org</a>
+                            </li> -->
+
                         </ul>
                     </div>
                 </div>
@@ -82,7 +86,8 @@
         <footer class="footer">
             <div class="container">
                 <p>Использование сайта подразумевает согласие с <a href="@routes.Application.agree()">пользовательским соглашением.</a> 18+ </p>
-                <p>Для полученния данных можно воспользоваться <a href="@routes.Application.api()">REST API.</a></p>
+                <p>Для полученния данных можно воспользоваться <a href="@routes.Application.api()">REST API</a>.</p>
+                <p>Вопросы и предложения <a href="mailto:sup@@umori.li">принимаются</a>.</p>
                 <ul class="footer-links">
                     <li><a href="http://bash.im">Bash.im</a></li>
                     <li class="muted">·</li>

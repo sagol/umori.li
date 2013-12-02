@@ -7,6 +7,7 @@ GET     /                           controllers.Application.index
 GET     /bash.html                  controllers.Application.bash(name: Option[String])
 GET     /ithappens.html             controllers.Application.ithappens
 GET     /zadolbali.html             controllers.Application.zadolbali
+#GET     /bashorg.html               controllers.Application.bashorg
 GET     /shortiki.html              controllers.Application.shortiki
 GET     /anekdot.html               controllers.Application.anekdot(name: Option[String])
 GET     /agree.html                 controllers.Application.agree

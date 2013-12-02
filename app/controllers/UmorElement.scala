@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringEscapeUtils
 import org.jsoup.safety.Whitelist
 import play.api.libs.json
 
-case class UmorElement(site: Site, var link: String, var elementPureHtml: String) {
+case class UmorElement(site: Site, rss: Boolean, var link: String, var elementPureHtml: String) {
 
   private var _link:String = null
   //  link = _link
@@ -49,9 +49,18 @@ case class UmorElement(site: Site, var link: String, var elementPureHtml: String
   def elementText = _elementText
   def element_=(element: Element) {
     _element = element
-    _elementHtml = Jsoup.clean(StringEscapeUtils.unescapeHtml4(_element.toString), Whitelist.simpleText().addTags("br").addTags("div", "p").
+    val elementString:String = {
+      if (rss) {
+        StringEscapeUtils.unescapeHtml4(_element.toString)
+      }
+      else {
+        _element.toString
+      }
+    }
+    _elementHtml = Jsoup.clean(elementString, Whitelist.simpleText().addTags("br").addTags("div", "p").
       addAttributes("div", "class").addAttributes("p", "class").addAttributes("div", "site"))
-    _elementPureHtml = Jsoup.clean(StringEscapeUtils.unescapeHtml4(_element.toString), Whitelist.basic())
+
+    _elementPureHtml = Jsoup.clean(elementString, Whitelist.basic())
     _elementText = Jsoup.clean(_element.text(), Whitelist.none())
     this.elementHtml = _elementHtml
     this.elementPureHtml = _elementPureHtml
@@ -66,6 +75,7 @@ object UmorElement {
 
     def reads(json: JsValue) = JsSuccess(UmorElement(
       (json \ "Site").as[Site],
+      (json \ "rss").as[Boolean],
       (json \ "link").as[String],
       (json \ "elementPureHtml").as[String]
     ))
