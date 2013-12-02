@@ -44,6 +44,5 @@ object SitesData {
 /*  val bashorg = """[
     { "site": "bash.org", "name": "bashorg", "url": "http://bash.org/?latest", "parsel": ".qt",
      "encoding": "windows-1251", "linkpar": "none", "desc": "Quote Database(dead)"}
-    ]"""
 */
 }
