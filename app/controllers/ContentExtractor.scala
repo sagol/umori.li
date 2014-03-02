@@ -32,11 +32,14 @@ class ContentExtractor (val site: Site) {
 
   private def getRSSlink = {
     val links = getDocument(site.url).select("link[type=application/rss+xml]")
-    if (links.size() > 1) {
-      var link = links.get(0).attr("href")
-      if (links.size() > 1)
-        link = links.get(1).attr("href")   // временный костыль для теста немецкого баша
-      if (link.contains(site.url)) link else null
+    if (links.size() > 0) {
+      val link = links.get(0).attr("href") match {
+        case null => null
+        case x if (x equals site.url) || (x.substring(0, x.length - 1) equals site.url) => x + "rss"
+        case x if x startsWith site.url => x
+        case _ => null
+      }
+      link
     }
     else null
   }

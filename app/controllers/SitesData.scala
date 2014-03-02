@@ -22,8 +22,8 @@ object SitesData {
   ]"""
   //<p class="the" id="story_10329"> "/story/10329"
   val zadolbali = """[
-    { "site": "zadolba.li", "name": "zadolbali", "url": "http://zadolba.li", "parsel": ".the",
-     "encoding": "windows-1251", "linkpar": "/story/", "desc": "Задолба!ли"}
+    { "site": "zadolba.li", "name": "zadolbali", "url": "http://zadolba.li", "parsel": ".text",
+     "encoding": "UTF-8", "linkpar": "/story/", "desc": "Задолба!ли"}
   ]"""
   ////<div class="shell" id="5865"> shortik.php?shortik=5865
   val shortiki = """[
@@ -32,18 +32,13 @@ object SitesData {
   ]"""
   //<div class="text" id="txt_id_621997"> "/id/621997/"
   val anekdot = """[
-    { "site": "anekdot.ru", "name": "new anekdot", "url": "http://www.anekdot.ru/last/j.html", "parsel": ".text[id]",
+    { "site": "anekdot.ru", "name": "new anekdot", "url": "http://www.anekdot.ru/last/j.html", "parsel": ".text",
      "encoding": "windows-1251", "linkpar": "/id/", "desc": "Свежие анекдоты"},
-    { "site": "anekdot.ru", "name": "new story", "url": "http://www.anekdot.ru/last/o.html", "parsel": ".text[id]",
+    { "site": "anekdot.ru", "name": "new story", "url": "http://www.anekdot.ru/last/o.html", "parsel": ".text",
      "encoding": "windows-1251", "linkpar": "/id/", "desc": "Новые истории"},
-    { "site": "anekdot.ru", "name": "new aforizm", "url": "http://www.anekdot.ru/last/a.html", "parsel": ".text[id]",
+    { "site": "anekdot.ru", "name": "new aforizm", "url": "http://www.anekdot.ru/last/a.html", "parsel": ".text",
      "encoding": "windows-1251", "linkpar": "/id/", "desc": "Новые афоризмы и фразы"},
-    { "site": "anekdot.ru", "name": "new stihi", "url": "http://www.anekdot.ru/last/c.html", "parsel": ".text[id]",
+    { "site": "anekdot.ru", "name": "new stihi", "url": "http://www.anekdot.ru/last/c.html", "parsel": ".text",
      "encoding": "windows-1251", "linkpar": "/id/", "desc": "Стишки"}
   ]"""
-/*  val bashorg = """[
-    { "site": "german-bash.org", "name": "germanbash", "url": "http://german-bash.org/action/latest", "parsel": ".quote_zeile",
-     "encoding": "UTF-8", "linkpar": "/", "desc": "German Bash"}
-    ]"""
-*/
 }
