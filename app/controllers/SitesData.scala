@@ -18,7 +18,7 @@ object SitesData {
   ]"""
   val ithappens = """[
     { "site": "ithappens.ru", "name": "ithappens", "url": "http://ithappens.ru", "parsel": "p[id]",
-     "encoding": "windows-1251", "linkpar": "/story/", "desc": "IT Happens"}
+     "encoding": "UTF-8", "linkpar": "/story/", "desc": "IT Happens"}
   ]"""
   //<p class="the" id="story_10329"> "/story/10329"
   val zadolbali = """[
