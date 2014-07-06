@@ -9,7 +9,7 @@ libraryDependencies ++= Seq(
 //  "com.typesafe.akka" % "akka-actor" % "2.3.4",
   "nu.validator.htmlparser" % "htmlparser" % "1.4",
   "org.jsoup" % "jsoup" % "1.7.1"
-//  "com.typesafe.akka" % "akka-actor" % "2.+"
+  "com.newrelic.agent.java" % "newrelic-agent" % "2.+"
 )
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala).enablePlugins(SbtWeb)
