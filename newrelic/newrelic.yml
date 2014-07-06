@@ -33,7 +33,6 @@ common: &default_settings
   # Set to false to use the URI of a web request as the name of the transaction.
   # Default is true.
   enable_auto_transaction_naming: true
-  
  
   # Set the name of your application as you'd like it show up in New Relic.
   # if enable_auto_app_naming is false, the agent reports all data to this application.
@@ -55,14 +54,19 @@ common: &default_settings
   # This setting is dynamic, so changes do not require restarting your application.
   # Default is false.
   #audit_mode: true
-  
+
   # The number of log files to use.
   # Default is 1.
   #log_file_count: 1
-  
+
   # The maximum number of bytes to write to any one log file.
+  # The log_file_count must be set greater than 1.
   # Default is 0 (no limit).
   #log_limit_in_kbytes: 0
+
+  # Override other log rolling configuration and roll the logs daily.
+  # Default is false.
+  #log_daily: false
 
   # The name of the log file.
   # Default is newrelic_agent.log.
@@ -72,15 +76,14 @@ common: &default_settings
   # Default is the logs directory in the newrelic.jar parent directory.
   #log_file_path:
   
-  # The agent communicates with New Relic via http by
-  # default.  If you want to communicate via https to increase
-  # security, then turn on SSL by setting this value to true.  Note,
-  # this will result in increased CPU overhead to perform the
-  # encryption involved in SSL communication, but this work is done
-  # asynchronously to the threads that process your application code,
-  # so it should not impact response times.
-  # Default is false.
-  ssl: false
+  # The agent communicates with New Relic via https by
+  # default.  If you want to communicate with newrelic via http,
+  # then turn off SSL by setting this value to false.
+  # This work is done asynchronously to the threads that process your
+  # application code, so response times will not be directly affected
+  # by this change.
+  # Default is true.
+  ssl: true
   
   # Proxy settings for connecting to the New Relic server.
   #
@@ -183,6 +186,15 @@ common: &default_settings
     # When this property is commented out it defaults to ignoring 404s.
     #
     # ignore_status_codes: 404
+
+  # Cross Application Tracing adds request and response headers to
+  # external calls using the Apache HttpClient libraries to provided better
+  # performance data when calling applications monitored by other New Relic Agents.
+  #
+  cross_application_tracer:
+    # Set to true to enable cross application tracing.
+    # Default is true.
+    enabled: true
 
   # Thread profiler measures wall clock time, CPU time, and method call counts
   # in your application's threads as they run.

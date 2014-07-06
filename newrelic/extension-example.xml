@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an example of a custom instrumentation extension XML file. -->
+
+<extension xmlns="https://newrelic.com/docs/java/xsd/v1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="newrelic-extension extension.xsd " name="customExtensions"
+	version="1.0" enabled="true">
+	<instrumentation>
+
+		<!-- This point cut instruments some of the methods in the class com.sample.SampleArrayList. -->
+		<pointcut transactionStartPoint="true"
+			excludeFromTransactionTrace="false" ignoreTransaction="false">
+			<className>com.sample.SampleArrayList</className>
+			<!-- Implements the method clear() -->
+			<method>
+				<name>clear</name>
+				<parameters />
+				<!-- The parameters node should be specified if there are no input parameters 
+					and you only want to match clear(). Not specifying the parameters node will 
+					match all methods named clear on the class regardless of the input parameters. 
+					In other words it would match clear(int) clear(long) clear(int, long). -->
+			</method>
+			<!-- Implements the method Object get(int index) -->
+			<method>
+				<name>get</name>
+				<parameters>
+					<!-- Primitives should written using their name: byte, short, int, long, 
+						float, double, boolean, char -->
+					<type>int</type>
+				</parameters>
+			</method>
+			<!-- Implements the method boolean addAll(int index, Collection c) -->
+			<method>
+				<name>addAll</name>
+				<parameters>
+					<!-- Make sure your parameters are listed in order. -->
+					<type>int</type>
+					<type>java.util.Collection</type>
+				</parameters>
+			</method>
+		</pointcut>
+
+		<!-- This point cut instruments some of the methods in the class com.sample.SampleString. -->
+		<pointcut transactionStartPoint="true">
+			<className>com.sample.SampleString</className>
+			<!-- Implements the method boolean startsWith(String prefix) -->
+			<method>
+				<name>startsWith</name>
+				<parameters>
+					<type>java.lang.String</type>
+				</parameters>
+			</method>
+			<!-- Implements the method String valueOf(char[] data, int offset, int 
+				count) -->
+			<method>
+				<name>valueOf</name>
+				<parameters>
+					<!-- Be sure to use brackets for arrays. -->
+					<type>char[]</type>
+					<type>int</type>
+					<type>int</type>
+				</parameters>
+			</method>
+		</pointcut>
+
+	</instrumentation>
+</extension>

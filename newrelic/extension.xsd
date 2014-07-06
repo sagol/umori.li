@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="newrelic-extension"
+<xs:schema targetNamespace="https://newrelic.com/docs/java/xsd/v1.0"
 	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:urn="newrelic-extension">
+	xmlns:urn="https://newrelic.com/docs/java/xsd/v1.0">
 
 	<xs:element name="extension">
 		<xs:annotation>
@@ -58,7 +58,8 @@
 				<xs:annotation>
 					<xs:documentation>
 						This is defaulted to CUSTOM if it is not set
-						in the XML.
+						in
+						the XML.
 					</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
@@ -192,9 +193,7 @@
 							and a java
 							String would be "java.lang.String". If no parameterTypes
 							are
-							specified then it will be assumed that the method has
-							0 input
-							parameters.
+							specified then all sigantures will be matched.
 						</xs:documentation>
 					</xs:annotation>
 				</xs:element>

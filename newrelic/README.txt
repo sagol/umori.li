@@ -22,7 +22,7 @@ The agent requires Java 1.5+.
 Installation
 ------------
 Complete installation instructions and troubleshooting tips are available 
-at: http://support.newrelic.com/kb/java/new-relic-for-java
+at: https://newrelic.com/docs/java/new-relic-for-java
 
 Configuration options are available at: http://support.newrelic.com/kb/java/java-agent-configuration
 
@@ -81,5 +81,8 @@ The New Relic Java agent uses code from the following open source projects under
     ASM                   http://asm.ow2.org/                              http://asm.ow2.org/license.html
     Apache Commons CLI    http://commons.apache.org/cli/                   http://www.apache.org/licenses/LICENSE-2.0
     JSON.simple           http://code.google.com/p/json-simple/            http://www.apache.org/licenses/LICENSE-2.0
-    SnakeYAML             http://code.google.com/p/snakeyaml/wiki/readme   http://www.opensource.org/licenses/mit-license.php
+    SnakeYAML             http://code.google.com/p/snakeyaml/              http://www.apache.org/licenses/LICENSE-2.0
+    Log4J                 http://logging.apache.org/log4j/1.2/             http://www.apache.org/licenses/LICENSE-2.0
+    LogBack               http://logback.qos.ch/                           http://www.eclipse.org/legal/epl-v10.html
+
 The remainder of the code is under the New Relic Agent License contained in the LICENSE file.
