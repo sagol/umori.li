@@ -5,20 +5,8 @@ import play.api.libs.json._
 
 object Application extends Controller {
 
-  def updateAll(): Boolean = {
-    try {
-      SourceInstances.updateAll()
-      true
-    } catch {
-      case _: ExceptionInInitializerError | _:NoClassDefFoundError => false
-    }
-  }
-
   def index = Action {
-    if (updateAll()) {
-      Ok(views.html.bash("Микс", SourceInstances.random.slice(0, 50)))
-    }
-    else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
+    Ok(views.html.bash("Микс", SourcesData.get("random").slice(0, 50)))
   }
 
   def agree = Action {
@@ -30,18 +18,11 @@ object Application extends Controller {
   }
 
   def get(site: Option[String], name: Option[String], num: Option[Int])= Action {
-//    if (updateAll()) {
-      val instance = SourceInstances.findInstanceByName(site.getOrElse("bash"), 0)
-      if (instance != null) {
-        val content = instance.contentByName(name.getOrElse("bash"))
-        if (content != null && content.size > 0) {
-          Ok(Json.toJson(content.slice(0, num.getOrElse(50)))).as("application/json; charset=utf-8")
-        }
-        else Ok(Json.toJson("Can't find source")).as("application/json; charset=utf-8")
-      }
-      else Ok(Json.toJson("Can't find source")).as("application/json; charset=utf-8")
-//    }
-  //  else Ok(Json.toJson("Error updating info")).as("application/json; charset=utf-8")
+    val content = SourcesData.get(name.getOrElse("bash"))
+    if (content != null && content.size > 0) {
+       Ok(Json.toJson(content.slice(0, num.getOrElse(50)))).as("application/json; charset=utf-8")
+     }
+     else Ok(Json.toJson("Can't find source")).as("application/json; charset=utf-8")
   }
 
   def sources = Action {
@@ -49,8 +30,9 @@ object Application extends Controller {
   }
 
   def random(num: Option[Int]) = Action {
-    Ok(Json.toJson(SourceInstances.random.slice(0, num.getOrElse(50)))).as("application/json; charset=utf-8")
+    Ok(Json.toJson(SourcesData.get("random").slice(0, num.getOrElse(50)))).as("application/json; charset=utf-8")
   }
+
   def url(url: Option[String])= Action {
     val content = SourceInstances.urlContent(url.getOrElse(""))
     var meta:String = ""
@@ -79,47 +61,24 @@ object Application extends Controller {
   }
 
   def ithappens = Action {
-    if (updateAll()) {
-      Ok(views.html.bash("ithappens.ru", SourceInstances.instance_ithappens.contentBySite("ithappens.ru")))
-    }
-    else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
+    Ok(views.html.bash("ithappens.ru", SourcesData.get("ithappens")))
   }
 
   def bash(name: Option[String])= Action {
-    if (updateAll()) {
-      Ok(views.html.bash("bash.im", SourceInstances.instance_bash.contentByName(name.getOrElse("bash"))))
-    }
-    else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
+    Ok(views.html.bash("bash.im", SourcesData.get(name.getOrElse("bash"))))
   }
 
   def zadolbali = Action {
-    if (updateAll()) {
-      Ok(views.html.bash("zadolba.li", SourceInstances.instance_zadolbali.contentBySite("zadolba.li")))
-    }
-    else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
+    Ok(views.html.bash("zadolba.li", SourcesData.get("zadolbali")))
   }
 
   def shortiki = Action {
-    if (updateAll()) {
-      Ok(views.html.bash("shortiki.com", SourceInstances.instance_shortiki.contentBySite("shortiki.com")))
-    }
-    else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
+    Ok(views.html.bash("shortiki.com", SourcesData.get("shortiki")))
   }
 
   def anekdot(name: Option[String]) = Action {
-    if (updateAll()) {
-      Ok(views.html.bash("anekdot.ru", SourceInstances.instance_anekdot.contentByName(name.getOrElse("new anekdot"))))
-    }
-    else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
+      Ok(views.html.bash("anekdot.ru", SourcesData.get(name.getOrElse("new anekdot"))))
   }
-/*
-  def bashorg = Action {
-    if (updateAll()) {
-      Ok(views.html.bash("germanbash.org", SourceInstances.instance_bashorg.contentByName("germanbash")))
-    }
-    else Ok(views.html.error("Ошибка", "Неизвестная ошибка"))
-  }
-  */
 
 }
 

@@ -10,13 +10,6 @@ import java.io.IOException
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 
-/**
- * Created with IntelliJ IDEA.
- * User: sagol
- * Date: 31.12.12
- * Time: 13:10
- * object
- */
 object SourceInstances {
 
   val instance_bash = new SourceInstance(SiteReader.bashimJokes)
@@ -24,10 +17,9 @@ object SourceInstances {
   val instance_zadolbali = new SourceInstance(SiteReader.zadolbaliJokes)
   val instance_shortiki = new SourceInstance(SiteReader.shortikiJokes)
   val instance_anekdot = new SourceInstance(SiteReader.anekdotJokes)
-//  val instance_bashorg = new SourceInstance(SiteReader.bashorgJokes)
 
   val instances = List (instance_bash, instance_ithappens, instance_zadolbali,
-    instance_shortiki, instance_anekdot/*, instance_bashorg*/)
+    instance_shortiki, instance_anekdot)
 
   var lastUpdateTime = System.currentTimeMillis()
 
@@ -101,68 +93,6 @@ object SourceInstances {
 
     if (site == null) mutable.LinkedHashSet()
     else content
-  }
-
-  private def randomMix(num: Int = 0): mutable.LinkedHashSet[UmorElement] = {
-    var tpl = List[(Int, Int, Int)]()
-    val rnd = new Random()
-    var len = 0
-
-    for (i <- 0 to 4) {
-      if (instances(i).instance != null && i != 2) {       // исключаем Задолба.ли
-        val ysz = instances(i).instance.size - 1
-        for (y <- 0 to ysz) {
-          if (!instances(i).instance(y).site.name.contains("abyss"))
-            len += instances(i).instance(y).content.size
-        }
-      }
-    }
-
-    if (num < len && num > 0) len = num
-
-    for (i <- 0 to len) {
-      var j = rnd.nextInt(5)
-      while (instances(j).instance.size == 0 || j == 2)
-        j = rnd.nextInt(5)
-      try {
-          var k = rnd.nextInt(instances(j).instance.size)
-          while (instances(j).instance(k).site.name.contains("abyss"))
-            k = rnd.nextInt(instances(j).instance.size)
-          val l = instances(j).instance(k).content.size - 1
-          if (l > 1)
-            tpl ::= (j, k, rnd.nextInt(l) + 1)
-      } catch {
-        case e:IllegalArgumentException =>
-      }
-    }
-    var elems:mutable.LinkedHashSet[UmorElement] = mutable.LinkedHashSet()
-    val s = tpl.toSet
-    for (i <- s) {
-      val inst = instances(i._1).instance(i._2)
-      val cont = inst.content.toArray
-      val el = cont.apply(i._3)
-      elems += el
-    }
-    elems
-  }
-
-  var random = randomMix ()
-
-  private def update(force: Boolean = false): Map[SourceInstance, Boolean] = {
-    var map:Map[SourceInstance, Boolean] = Map()
-    if (force || (System.currentTimeMillis() - lastUpdateTime > 60000)) {
-      System.gc()
-      for (i <- this.instances) map += (i -> i.update())
-      this.random = randomMix()
-      this.lastUpdateTime = System.currentTimeMillis()
-    }
-    map
-  }
-  var instanceUpdateMap = update()
-
-
-  def updateAll() {
-    this.instanceUpdateMap = update()
   }
 
 }
