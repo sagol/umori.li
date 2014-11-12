@@ -61,7 +61,7 @@ object Application extends Controller {
   }
 
   def ithappens = Action {
-    Ok(views.html.bash("ithappens.ru", SourcesData.get("ithappens")))
+    Ok(views.html.bash("ithappens.me", SourcesData.get("ithappens")))
   }
 
   def bash(name: Option[String])= Action {

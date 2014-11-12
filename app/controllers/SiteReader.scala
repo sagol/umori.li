@@ -59,10 +59,10 @@ object SiteReader {
     buf.toString
   }
 
-  val sites = List("bash.im", "ithappens.ru", "zadolba.li", "shortiki.com", "anekdot.ru", "blairbash.org")
+  val sites = List("bash.im", "ithappens.me", "zadolba.li", "shortiki.com", "anekdot.ru", "blairbash.org")
 
   val bashimJokes = SiteReader.ParseSites.getSiteData("bash.im", SitesData.bashim)
-  val ithappensJokes = SiteReader.ParseSites.getSiteData("ithappens.ru", SitesData.ithappens)
+  val ithappensJokes = SiteReader.ParseSites.getSiteData("ithappens.me", SitesData.ithappens)
   val zadolbaliJokes = SiteReader.ParseSites.getSiteData("zadolba.li", SitesData.zadolbali)
   val shortikiJokes = SiteReader.ParseSites.getSiteData("shortiki.com", SitesData.shortiki)
   val anekdotJokes = SiteReader.ParseSites.getSiteData("anekdot.ru", SitesData.anekdot)

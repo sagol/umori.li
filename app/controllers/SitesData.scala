@@ -17,7 +17,7 @@ object SitesData {
        "encoding": "windows-1251", "linkpar": "none", "desc": "Цитатник Рунета - Бездна"}
   ]"""
   val ithappens = """[
-    { "site": "ithappens.me", "name": "ithappens", "url": "http://ithappens.me", "parsel": "p[id]",
+    { "site": "ithappens.me", "name": "ithappens", "url": "http://ithappens.me", "parsel": ".text",
      "encoding": "UTF-8", "linkpar": "/story/", "desc": "IT Happens"}
   ]"""
   //<p class="the" id="story_10329"> "/story/10329"
