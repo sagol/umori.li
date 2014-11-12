@@ -1,14 +1,11 @@
 package controllers
 
-import java.util.Random
 import scala.Predef._
 import collection.mutable
 import org.jsoup.{UnsupportedMimeTypeException, HttpStatusException, Jsoup}
 import java.net.{SocketTimeoutException, MalformedURLException, URL}
-import org.jsoup.parser.Parser
 import java.io.IOException
 import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
 
 object SourceInstances {
 

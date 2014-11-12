@@ -38,5 +38,39 @@ class UpdateActor(inst: (Int, String) = (0, "")) extends Actor {
   }
 }
 
+ /*
+case class Request(url: String)
+case class Response(response: String)
 
+class Requestor extends Actor {
+  def receive = {
+    case Request(url) =>
+      val resp = "response"
+      sender ! Response(resp)
+  }
+}
 
+class Supervisor extends Actor {
+  private val num = 1000000
+  private val responses = new ArrayBuffer[String](num)
+  def receive = {
+    case 'Start =>
+      for (idx <- 1 to num) {
+        val actor = context.actorOf(Props(new Requestor))
+        actor ! Request(s"http://localhost/?id=$idx")
+      }
+    case Response(resp) =>
+      responses += resp
+      if (responses.size == num) {
+        sender ! responses
+      }
+  }
+}
+
+def main() {
+val supervisor = actorSystem.actorOf(Props(new Supervisor))
+val result = pattern.ask(supervisor, 'Start)
+Await.result(result, 1.minute)
+}
+
+   */
