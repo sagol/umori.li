@@ -4,6 +4,8 @@
 
 # Home page
 
+->         /                      cors.Routes
+
 GET        /                      controllers.Application.index
 GET        /bash.html             controllers.Application.bash(name: Option[String])
 GET        /ithappens.html        controllers.Application.ithappens
@@ -21,4 +23,3 @@ GET        /api/random            controllers.Application.random(num: Option[Int
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file          controllers.Assets.at(path="/public", file)
 
-->         /                      cors.Routes
