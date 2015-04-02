@@ -25,11 +25,6 @@ object SitesData {
     { "site": "zadolba.li", "name": "zadolbali", "url": "http://zadolba.li", "parsel": ".text",
      "encoding": "UTF-8", "linkpar": "/story/", "desc": "Задолба!ли"}
   ]"""
-  ////<div class="shell" id="5865"> shortik.php?shortik=5865
-  val shortiki = """[
-    { "site": "shortiki.com", "name": "shortiki", "url": "http://shortiki.com", "parsel": ".shortik",
-     "encoding": "UTF-8", "linkpar": "/shortik.php?shortik=", "desc": "Шортики"}
-  ]"""
   //<div class="text" id="txt_id_621997"> "/id/621997/"
   val anekdot = """[
     { "site": "anekdot.ru", "name": "new anekdot", "url": "http://www.anekdot.ru/last/j.html", "parsel": ".text",

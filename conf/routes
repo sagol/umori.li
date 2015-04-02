@@ -3,21 +3,22 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
-GET     /bash.html                  controllers.Application.bash(name: Option[String])
-GET     /ithappens.html             controllers.Application.ithappens
-GET     /zadolbali.html             controllers.Application.zadolbali
-#GET     /bashorg.html               controllers.Application.bashorg
-GET     /shortiki.html              controllers.Application.shortiki
-GET     /anekdot.html               controllers.Application.anekdot(name: Option[String])
-GET     /agree.html                 controllers.Application.agree
-GET     /api.html                   controllers.Application.api
-GET     /api                        controllers.Application.api
-GET     /url.html                   controllers.Application.url(url: Option[String])
-GET     /api/get                    controllers.Application.get(site: Option[String], name: Option[String], num: Option[Int])
-GET     /api/sources                controllers.Application.sources
-GET     /api/random                 controllers.Application.random(num: Option[Int])
+
+GET        /                      controllers.Application.index
+GET        /bash.html             controllers.Application.bash(name: Option[String])
+GET        /ithappens.html        controllers.Application.ithappens
+GET        /zadolbali.html        controllers.Application.zadolbali
+GET        /anekdot.html          controllers.Application.anekdot(name: Option[String])
+GET        /agree.html            controllers.Application.agree
+GET        /api.html              controllers.Application.api
+GET        /api                   controllers.Application.api
+GET        /url.html              controllers.Application.url(url: Option[String])
+GET        /api/get               controllers.Application.get(site: Option[String], name: Option[String], num: Option[Int])
+GET        /api/sources           controllers.Application.sources
+GET        /api/random            controllers.Application.random(num: Option[Int])
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET        /assets/*file          controllers.Assets.at(path="/public", file)
+
+->         /                      cors.Routes

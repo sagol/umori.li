@@ -72,10 +72,6 @@ object Application extends Controller {
     Ok(views.html.bash("zadolba.li", SourcesData.get("zadolbali")))
   }
 
-  def shortiki = Action {
-    Ok(views.html.bash("shortiki.com", SourcesData.get("shortiki")))
-  }
-
   def anekdot(name: Option[String]) = Action {
       Ok(views.html.bash("anekdot.ru", SourcesData.get(name.getOrElse("new anekdot"))))
   }

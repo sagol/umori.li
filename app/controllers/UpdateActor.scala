@@ -12,8 +12,7 @@ class UpdateActor(inst: (Int, String) = (0, "")) extends Actor {
     case "update" => {
       log.info("received update - " + inst._2)
       val instance = SourceInstances.instances(inst._1)
-      if (inst._1 != null)
-        SourcesData.update(inst._2, instance.contentByName(inst._2))
+      SourcesData.update(inst._2, instance.contentByName(inst._2))
     }
     case "update_random" => {
       log.info("received update_random")
@@ -21,7 +20,7 @@ class UpdateActor(inst: (Int, String) = (0, "")) extends Actor {
     }
     case "updateall" => {
       log.info("received update - all")
-      for (i <- 0 to 4) {
+      for (i <- 0 to SourceInstances.instances.size - 1) {
         val ysz = SourceInstances.instances(i).instance.size - 1
           for (y <- 0 to ysz) {
             val instance = SourceInstances.instances(i).instance(y)

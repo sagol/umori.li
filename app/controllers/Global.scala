@@ -2,13 +2,15 @@ import controllers.UpdateActor
 import play.api.mvc.RequestHeader
 
 import scala.concurrent.duration.DurationInt
-//import play.api.Application
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.concurrent.Akka
 import akka.actor.Props
 import play.api._
+import be.cafeba.cors.filters.CorsFilter
+import play.api.GlobalSettings
+import play.api.mvc.WithFilters
 
-object Global extends GlobalSettings {
+object Global extends WithFilters(new CorsFilter) with GlobalSettings {
 
   override def onStart(app: play.api.Application) {
     super.onStart(app)
