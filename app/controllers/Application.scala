@@ -61,20 +61,33 @@ object Application extends Controller {
   }
 
   def ithappens = Action {
-    Ok(views.html.bash("ithappens.me", SourcesData.get("ithappens")))
+    Ok(views.html.bash(SiteReader.ithappensJokes.head.desc, SourcesData.get("ithappens")))
   }
 
   def bash(name: Option[String])= Action {
-    Ok(views.html.bash("bash.im", SourcesData.get(name.getOrElse("bash"))))
+    Ok(views.html.bash(SiteReader.bashimJokes.head.desc, SourcesData.get(name.getOrElse("bash"))))
   }
 
   def zadolbali = Action {
-    Ok(views.html.bash("zadolba.li", SourcesData.get("zadolbali")))
+    Ok(views.html.bash(SiteReader.zadolbaliJokes.head.desc, SourcesData.get("zadolbali")))
   }
 
   def anekdot(name: Option[String]) = Action {
-      Ok(views.html.bash("anekdot.ru", SourcesData.get(name.getOrElse("new anekdot"))))
+      Ok(views.html.bash(SiteReader.anekdotJokes.head.desc, SourcesData.get(name.getOrElse("new anekdot"))))
   }
+
+  def ideer = Action {
+    Ok(views.html.bash(SiteReader.ideerJokes.head.desc, SourcesData.get("ideer")))
+  }
+
+  def detorgru = Action {
+    Ok(views.html.bash(SiteReader.detorgruJokes.head.desc, SourcesData.get("Deti")))
+  }
+
+  def xkcdb = Action {
+    Ok(views.html.bash(SiteReader.xkcdbJokes.head.desc, SourcesData.get("XKCDB")))
+  }
+
 
 }
 
