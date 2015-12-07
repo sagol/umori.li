@@ -86,7 +86,7 @@ class ContentExtractor (val site: Site) {
   }
 
   def content: Uelements = {
-    if (System.currentTimeMillis() - lastUpdateTime < 300000) cache
+    if (System.currentTimeMillis() - lastUpdateTime < 900000) cache
     else {
       lastUpdateTime = System.currentTimeMillis()
       val link = getLink
