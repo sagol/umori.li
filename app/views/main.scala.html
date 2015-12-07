@@ -53,10 +53,16 @@
                                     <li><a href="@routes.Application.anekdot(Option("new aforizm"))">Афоризмы</a></li>
                                     <li><a href="@routes.Application.anekdot(Option("new stihi"))">Стихи</a></li>
                                 </ul>
-<!--                          </li>
-                            <li class="@("active".when(nav == "german-bash.org"))">
-                                <a href="@routes.Application.bash(Option("bash"))">german-bash.org</a>
-                            </li> -->
+                            </li>
+                            <li class="@("active".when(nav == "ideer.ru"))">
+                                <a href="@routes.Application.ideer()">ideer.ru</a>
+                            </li>
+                            <li class="@("active".when(nav == "det.org.ru"))">
+                                <a href="@routes.Application.detorgru()">det.org.ru</a>
+                            </li>
+                            <li class="@("active".when(nav == "xkcdb.com"))">
+                                <a href="@routes.Application.xkcdb()">xkcdb.com</a>
+                            </li>
 
                         </ul>
                     </div>
@@ -90,17 +96,6 @@
                 <p>Использование сайта подразумевает согласие с <a href="@routes.Application.agree()">пользовательским соглашением.</a> 18+ </p>
                 <p>Для полученния данных можно воспользоваться <a href="@routes.Application.api()">REST API</a>.</p>
                 <p>Вопросы и предложения <a href="mailto:sup@@umori.li">принимаются</a>.</p>
-                <ul class="footer-links">
-                    <li><a href="http://bash.im">Bash.im</a></li>
-                    <li class="muted">·</li>
-                    <li><a href="http://ithappens.me">IT happens</a></li>
-                    <li class="muted">·</li>
-                    <li><a href="http://zadolba.li">Zadolba.li</a></li>
-                    <li class="muted">·</li>
-                    <li><a href="http://shortiki.com">Shortiki.com</a></li>
-                    <li class="muted">·</li>
-                    <li><a href="http://anekdot.ru">Anekdot.ru</a></li>
-                </ul>
                     <div class="g-plusone container" data-annotation="inline" data-width="120"></div>
                     <script type="text/javascript">
                         window.___gcfg = {lang: 'ru'};

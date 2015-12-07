@@ -36,4 +36,17 @@ object SitesData {
     { "site": "anekdot.ru", "name": "new stihi", "url": "http://www.anekdot.ru/last/c.html", "parsel": ".text",
      "encoding": "windows-1251", "linkpar": "/id/", "desc": "Стишки"}
   ]"""
+  val ideer = """[
+    { "site": "ideer.ru", "name": "ideer", "url": "http://ideer.ru", "parsel": ".shortContent",
+     "encoding": "UTF-8", "linkpar": "/", "desc": "Подслушано"}
+  ]"""
+  val detorgru = """[
+    { "site": "det.org.ru", "name": "Deti", "url": "http://det.org.ru", "parsel": ".history",
+     "encoding": "windows-1251", "linkpar": "/?quote=", "desc": "Говорят дети"}
+  ]"""
+  val xkcdb = """[
+    { "site": "xkcdb.com", "name": "XKCDB", "url": "http://www.xkcdb.com", "parsel": "span.quote",
+     "encoding": "UTF-8", "linkpar": "/", "desc": "XKCDB"}
+  ]"""
+
 }

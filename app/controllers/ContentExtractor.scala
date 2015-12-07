@@ -37,6 +37,7 @@ class ContentExtractor (val site: Site) {
         case null => null
         case x if (x equals site.url) || (x.substring(0, x.length - 1) equals site.url) => x + "rss"
         case x if x startsWith site.url => x
+        case x if (x equals "rss/") || (x equals "rss") => site.url + "/"+ x
         case _ => null
       }
       link

@@ -13,8 +13,12 @@ object SourceInstances {
   val instance_ithappens = new SourceInstance(SiteReader.ithappensJokes)
   val instance_zadolbali = new SourceInstance(SiteReader.zadolbaliJokes)
   val instance_anekdot = new SourceInstance(SiteReader.anekdotJokes)
+  val instance_ideerJokes = new SourceInstance(SiteReader.ideerJokes)
+  val instance_detorgru = new SourceInstance(SiteReader.detorgruJokes)
+  val instance_xkcdb = new SourceInstance(SiteReader.xkcdbJokes)
 
-  val instances = List (instance_bash, instance_ithappens, instance_zadolbali, instance_anekdot)
+  val instances = List (instance_bash, instance_ithappens, instance_zadolbali, instance_anekdot,
+    instance_ideerJokes, instance_detorgru, instance_xkcdb)
 
   var lastUpdateTime = System.currentTimeMillis()
 
