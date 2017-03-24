@@ -60,10 +60,10 @@ object Application extends Controller {
     Ok(views.html.url("...", content)(meta))
   }
 
-  def ithappens = Action {
+/*  def ithappens = Action {
     Ok(views.html.bash(SiteReader.ithappensJokes.head.desc, SourcesData.get("ithappens")))
   }
-
+*/
   def bash(name: Option[String])= Action {
     Ok(views.html.bash(SiteReader.bashimJokes.head.desc, SourcesData.get(name.getOrElse("bash"))))
   }

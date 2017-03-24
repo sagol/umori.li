@@ -59,28 +59,28 @@ object SiteReader {
     buf.toString
   }
 
-  val sites = List("bash.im", "ithappens.me", "zadolba.li", "anekdot.ru", "ideer.ru", "det.org.ru", "xkcdb.org")
+  val sites = List("bash.im", /*"ithappens.me",*/ "zadolba.li", "anekdot.ru", "ideer.ru", "det.org.ru", "xkcdb.org")
 
   val bashimJokes = SiteReader.ParseSites.getSiteData("bash.im", SitesData.bashim)
-  val ithappensJokes = SiteReader.ParseSites.getSiteData("ithappens.me", SitesData.ithappens)
+/*  val ithappensJokes = SiteReader.ParseSites.getSiteData("ithappens.me", SitesData.ithappens)*/
   val zadolbaliJokes = SiteReader.ParseSites.getSiteData("zadolba.li", SitesData.zadolbali)
   val anekdotJokes = SiteReader.ParseSites.getSiteData("anekdot.ru", SitesData.anekdot)
   val ideerJokes = SiteReader.ParseSites.getSiteData("ideer.ru", SitesData.ideer)
   val detorgruJokes = SiteReader.ParseSites.getSiteData("det.org.ru", SitesData.detorgru)
   val xkcdbJokes = SiteReader.ParseSites.getSiteData("xkcdb.com", SitesData.xkcdb)
 
-  val sources = List(bashimJokes, ithappensJokes, zadolbaliJokes, anekdotJokes, ideerJokes, detorgruJokes,
+  val sources = List(bashimJokes, /*ithappensJokes,*/ zadolbaliJokes, anekdotJokes, ideerJokes, detorgruJokes,
     xkcdbJokes)
 
   val siteMap: Map[String, List[Site]] =
     Map() ++ Seq(
       (sites(0) -> bashimJokes),
-      (sites(1) -> ithappensJokes),
-      (sites(2) -> zadolbaliJokes),
-      (sites(3) -> anekdotJokes),
-      (sites(4) -> ideerJokes),
-      (sites(5) -> detorgruJokes),
-      (sites(6) -> xkcdbJokes)
+//      (sites(1) -> ithappensJokes),
+      (sites(1) -> zadolbaliJokes),
+      (sites(2) -> anekdotJokes),
+      (sites(3) -> ideerJokes),
+      (sites(4) -> detorgruJokes),
+      (sites(5) -> xkcdbJokes)
     )
 
   val siteSets: List[SiteSet] = sources.map(sites => toSiteSet(sites))

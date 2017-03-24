@@ -16,10 +16,11 @@ object SitesData {
      { "site": "bash.im", "name": "abyss", "url": "http://bash.im/abyss", "parsel": ".text",
        "encoding": "windows-1251", "linkpar": "none", "desc": "Цитатник Рунета - Бездна"}
   ]"""
-  val ithappens = """[
+/*  val ithappens = """[
     { "site": "ithappens.me", "name": "ithappens", "url": "http://ithappens.me", "parsel": ".text",
      "encoding": "UTF-8", "linkpar": "/story/", "desc": "IT Happens"}
   ]"""
+*/
   //<p class="the" id="story_10329"> "/story/10329"
   val zadolbali = """[
     { "site": "zadolba.li", "name": "zadolbali", "url": "http://zadolba.li", "parsel": ".text",
