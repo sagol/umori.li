@@ -59,13 +59,13 @@ object SiteReader {
     buf.toString
   }
 
-  val sites = List("bash.im", /*"ithappens.me",*/ "zadolba.li", "anekdot.ru", "ideer.ru", "det.org.ru", "xkcdb.org")
+  val sites = List("bash.im", /*"ithappens.me",*/ "zadolba.li", "anekdot.ru", /*"ideer.ru"*/, "det.org.ru", "xkcdb.org")
 
   val bashimJokes = SiteReader.ParseSites.getSiteData("bash.im", SitesData.bashim)
 /*  val ithappensJokes = SiteReader.ParseSites.getSiteData("ithappens.me", SitesData.ithappens)*/
   val zadolbaliJokes = SiteReader.ParseSites.getSiteData("zadolba.li", SitesData.zadolbali)
   val anekdotJokes = SiteReader.ParseSites.getSiteData("anekdot.ru", SitesData.anekdot)
-  val ideerJokes = SiteReader.ParseSites.getSiteData("ideer.ru", SitesData.ideer)
+/*  val ideerJokes = SiteReader.ParseSites.getSiteData("ideer.ru", SitesData.ideer) */
   val detorgruJokes = SiteReader.ParseSites.getSiteData("det.org.ru", SitesData.detorgru)
   val xkcdbJokes = SiteReader.ParseSites.getSiteData("xkcdb.com", SitesData.xkcdb)
 
@@ -78,7 +78,7 @@ object SiteReader {
 //      (sites(1) -> ithappensJokes),
       (sites(1) -> zadolbaliJokes),
       (sites(2) -> anekdotJokes),
-      (sites(3) -> ideerJokes),
+ //     (sites(3) -> ideerJokes),
       (sites(4) -> detorgruJokes),
       (sites(5) -> xkcdbJokes)
     )
