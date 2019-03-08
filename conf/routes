@@ -9,7 +9,7 @@
 GET        /                      controllers.Application.index
 GET        /bash.html             controllers.Application.bash(name: Option[String])
 #GET        /ithappens.html        controllers.Application.ithappens
-GET        /ideer.html            controllers.Application.ideer
+#GET        /ideer.html            controllers.Application.ideer
 GET        /detorgru.html         controllers.Application.detorgru
 GET        /xkcdb.html            controllers.Application.xkcdb
 GET        /zadolbali.html        controllers.Application.zadolbali
