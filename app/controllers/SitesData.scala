@@ -11,7 +11,7 @@ object SitesData {
   //<a href="/quote/420939/bayan" class="old" id="vb420939"> "/quote/420939"
   //<p class="text" id="story_10495">  "/story/10495"
   val bashim = """[
-    { "site": "bash.im", "name": "bash", "url": "http://bash.im", "parsel": ".quote",
+    { "site": "bash.im", "name": "bash", "url": "http://bash.im", "parsel": ".quote__body",
      "encoding": "windows-1251", "linkpar": "/quote/", "desc": "Цитатник Рунета"},
      { "site": "bash.im", "name": "abyss", "url": "http://bash.im/abyss", "parsel": ".quote__body",
        "encoding": "windows-1251", "linkpar": "none", "desc": "Цитатник Рунета - Бездна"}
@@ -38,7 +38,7 @@ object SitesData {
      "encoding": "windows-1251", "linkpar": "/id/", "desc": "Стишки"}
   ]"""
   val ideer = """[
-    { "site": "ideer.ru", "name": "ideer", "url": "http://ideer.ru", "parsel": ".shortContent",
+    { "site": "ideer.ru", "name": "ideer", "url": "http://ideer.ru", "parsel": ".secret",
      "encoding": "UTF-8", "linkpar": "/", "desc": "Подслушано"}
   ]"""
   val detorgru = """[
