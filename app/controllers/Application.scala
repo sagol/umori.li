@@ -75,11 +75,11 @@ object Application extends Controller {
   def anekdot(name: Option[String]) = Action {
       Ok(views.html.bash(SiteReader.anekdotJokes.head.desc, SourcesData.get(name.getOrElse("new anekdot"))))
   }
-
+/*
   def ideer = Action {
     Ok(views.html.bash(SiteReader.ideerJokes.head.desc, SourcesData.get("ideer")))
   }
-
+*/
   def detorgru = Action {
     Ok(views.html.bash(SiteReader.detorgruJokes.head.desc, SourcesData.get("Deti")))
   }
